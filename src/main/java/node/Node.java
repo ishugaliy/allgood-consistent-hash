@@ -2,5 +2,5 @@ package node;
 
 public interface Node {
 
-    String getKey();
+    String getPartitionKey();
 }

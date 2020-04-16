@@ -1,19 +1,26 @@
 import node.Node;
 
 import java.util.Collection;
-import java.util.stream.Stream;
+import java.util.Optional;
+import java.util.Set;
 
 public interface ConsistentHash<T extends Node> {
 
-    boolean addNode(T node);
+    String geName();
 
-    boolean addNodes(Collection<T> nodes);
+    boolean add(T node);
 
-    boolean containsNode(T node);
+    boolean addAll(Collection<T> nodes);
 
-    boolean removeNode(T node);
+    boolean contains(T node);
 
-    Stream<T> getNodes();
+    boolean remove(T node);
 
-    T route(String key);
+    Set<T> getNodes();
+
+    Optional<T> locate(String key);
+
+    Set<T> locateN(String key, int count);
+
+    int size();
 }
