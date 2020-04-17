@@ -6,8 +6,6 @@ import java.util.Set;
 
 public interface ConsistentHash<T extends Node> {
 
-    String geName();
-
     boolean add(T node);
 
     boolean addAll(Collection<T> nodes);
@@ -20,7 +18,7 @@ public interface ConsistentHash<T extends Node> {
 
     Optional<T> locate(String key);
 
-    Set<T> locateN(String key, int count);
+    Set<T> locate(String key, int count);
 
     int size();
 }

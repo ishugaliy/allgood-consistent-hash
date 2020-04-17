@@ -8,8 +8,12 @@ public class SimpleNode implements Node {
 
     private final String value;
 
-    public SimpleNode(String value) {
+    private SimpleNode(String value) {
         this.value = value;
+    }
+
+    public static SimpleNode of(String value) {
+        return new SimpleNode(value);
     }
 
     @Override

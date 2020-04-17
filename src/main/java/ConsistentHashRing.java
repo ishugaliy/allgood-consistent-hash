@@ -8,25 +8,18 @@ import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.stream.Collectors;
 
-public final class ConsistentHashRing<T extends Node> implements ConsistentHash<T> {
+final class ConsistentHashRing<T extends Node> implements ConsistentHash<T> {
 
     private final ReadWriteLock mutex = new ReentrantReadWriteLock(true);
     private final Map<T, Set<Partition<T>>> members = new HashMap<>();
     private final NavigableMap<Long, Partition<T>> ring = new TreeMap<>();
 
-    private final String name;
     private final Hasher hasher;
     private final int replicationFactor;
 
-    protected ConsistentHashRing(String name, Hasher hasher, int replicationFactor) {
-        this.name = name;
+    ConsistentHashRing(Hasher hasher, int replicationFactor) {
         this.hasher = hasher;
         this.replicationFactor = replicationFactor;
-    }
-
-    @Override
-    public String geName() {
-        return name;
     }
 
     @Override
@@ -109,7 +102,7 @@ public final class ConsistentHashRing<T extends Node> implements ConsistentHash<
     public Optional<T> locate(String key) {
         mutex.readLock().lock();
         try {
-            long slot = hasher.hash(key);
+            long slot = hash(key);
             Map.Entry<Long, Partition<T>> e = ring.ceilingEntry(slot);
             if (e == null) {
                 e = ring.firstEntry();
@@ -121,8 +114,8 @@ public final class ConsistentHashRing<T extends Node> implements ConsistentHash<
     }
 
     @Override
-    public Set<T> locateN(String key, int count) {
-        throw new UnsupportedOperationException("`locateN` method is not implemented yet");
+    public Set<T> locate(String key, int count) {
+        throw new UnsupportedOperationException("`locateN` method is not supported");
     }
 
     @Override
@@ -155,10 +148,18 @@ public final class ConsistentHashRing<T extends Node> implements ConsistentHash<
 
     private long findSlot(String pk) {
         long slot;
-        int seed = -1;
+        int seed = 0;
         do {
-            slot = hasher.hash(pk, ++seed);
+            slot = hash(pk, seed++);
         } while (ring.containsKey(slot));
         return slot;
+    }
+
+    private long hash(String key) {
+        return hash(key, 0);
+    }
+
+    private long hash(String key, int seed) {
+        return Math.abs(hasher.hash(key, seed));
     }
 }
