@@ -12,7 +12,9 @@ repositories {
 }
 
 dependencies {
+    compile group: 'com.google.guava', name: 'guava', version: '28.2-jre'
+    compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.30'
+
     testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.6.2'
     testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.6.2'
-    compile group: 'com.google.guava', name: 'guava', version: '28.2-jre'
 }

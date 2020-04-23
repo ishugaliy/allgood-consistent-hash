@@ -6,48 +6,43 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 
-public class ConsistentHashBuilder<T extends Node> {
+class HashRingBuilder<T extends Node> {
 
     private String name = "";
     private Hasher hasher;
-    private int replicationFactor = 10;
+    private int partitionFactor = 10;
     private Collection<T> nodes = Collections.emptyList();
 
-    private ConsistentHashBuilder() {
-    }
+    public HashRingBuilder() { }
 
-    public static <T extends Node> ConsistentHashBuilder<T> newBuilder() {
-        return new ConsistentHashBuilder<>();
-    }
-
-    public ConsistentHashBuilder<T>  name(String name) {
+    public HashRingBuilder<T> name(String name) {
         assertNotNull(name, "Name can not be null");
         this.name = name;
         return this;
     }
 
-    public ConsistentHashBuilder<T> hasher(Hasher hasher) {
+    public HashRingBuilder<T> hasher(Hasher hasher) {
         this.hasher = hasher;
         return this;
     }
 
-    public ConsistentHashBuilder<T> replicationFactor(int replicationFactor) {
-        if (replicationFactor < 1) {
+    public HashRingBuilder<T> partitionRate(int partitionFactor) {
+        if (partitionFactor < 1) {
             throw new IllegalArgumentException("Replication Factor can not be less than 1");
         }
-        this.replicationFactor = replicationFactor;
+        this.partitionFactor = partitionFactor;
         return this;
     }
 
-    public ConsistentHashBuilder<T> nodes(Collection<T> nodes) {
+    public HashRingBuilder<T> nodes(Collection<T> nodes) {
         assertNotNull(nodes, "Nodes list can not be null");
         this.nodes = nodes;
         return this;
     }
 
-    public ConsistentHash<T> build() {
+    public HashRing<T> build() {
         hasher = hasher != null ? hasher : new Murmur3Hasher();
-        ConsistentHashRing<T> ring = new ConsistentHashRing<T>(name, hasher, replicationFactor);
+        HashRing<T> ring = new HashRing<>(name, hasher, partitionFactor);
         ring.addAll(new ArrayList<>(nodes));
         return ring;
     }

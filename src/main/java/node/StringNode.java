@@ -4,28 +4,28 @@ import com.google.common.base.MoreObjects;
 
 import java.util.Objects;
 
-public class SimpleNode implements Node {
+public class StringNode implements Node {
 
     private final String value;
 
-    private SimpleNode(String value) {
+    private StringNode(String value) {
         this.value = value;
     }
 
-    public static SimpleNode of(String value) {
-        return new SimpleNode(value);
+    public static StringNode of(String value) {
+        return new StringNode(value);
     }
 
     @Override
-    public String getPartitionKey() {
+    public String getKey() {
         return value;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof SimpleNode)) return false;
-        SimpleNode that = (SimpleNode) o;
+        if (!(o instanceof StringNode)) return false;
+        StringNode that = (StringNode) o;
         return Objects.equals(value, that.value);
     }
 

@@ -6,6 +6,8 @@ import java.util.Set;
 
 public interface ConsistentHash<T extends Node> {
 
+    String getName();
+
     boolean add(T node);
 
     boolean addAll(Collection<T> nodes);

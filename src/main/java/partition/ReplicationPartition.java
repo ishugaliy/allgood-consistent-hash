@@ -7,12 +7,12 @@ import java.util.Objects;
 
 public final class ReplicationPartition<T extends Node> implements Partition<T> {
 
-    private final int id;
+    private final int index;
     private final T node;
     private long slot;
 
-    public ReplicationPartition(int id, T node) {
-        this.id = id;
+    public ReplicationPartition(int index, T node) {
+        this.index = index;
         this.node = node;
     }
 
@@ -33,7 +33,7 @@ public final class ReplicationPartition<T extends Node> implements Partition<T> 
 
     @Override
     public String getPartitionKey() {
-        return String.format("rp%d:%s", id, node.getPartitionKey());
+        return String.format("rp%d:%s", index, node.getKey());
     }
 
     @Override
@@ -41,20 +41,20 @@ public final class ReplicationPartition<T extends Node> implements Partition<T> 
         if (this == o) return true;
         if (!(o instanceof ReplicationPartition)) return false;
         ReplicationPartition<?> that = (ReplicationPartition<?>) o;
-        return id == that.id &&
+        return index == that.index &&
                 slot == that.slot &&
                 Objects.equals(node, that.node);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, node, slot);
+        return Objects.hash(index, node, slot);
     }
 
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
-                .add("id", id)
+                .add("index", index)
                 .add("slot", slot)
                 .add("partitionKey", getPartitionKey())
                 .toString();

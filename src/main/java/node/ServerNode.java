@@ -32,7 +32,7 @@ public final class ServerNode implements Node {
     }
 
     @Override
-    public String getPartitionKey() {
+    public String getKey() {
         return String.format("%s:%s:%s", dc, ip, port);
     }
 

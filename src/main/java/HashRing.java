@@ -1,5 +1,7 @@
 import hash.Hasher;
 import node.Node;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import partition.Partition;
 import partition.ReplicationPartition;
 
@@ -7,19 +9,33 @@ import java.util.*;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
-final class ConsistentHashRing<T extends Node> implements ConsistentHash<T> {
+public final class HashRing<T extends Node> implements ConsistentHash<T> {
+
+    private static final Logger LOG = LoggerFactory.getLogger(HashRing.class);
 
     private final ReadWriteLock mutex = new ReentrantReadWriteLock(true);
-    private final Map<T, Set<Partition<T>>> members = new HashMap<>();
+    private final Map<T, Set<Partition<T>>> nodes = new HashMap<>();
     private final NavigableMap<Long, Partition<T>> ring = new TreeMap<>();
 
+    private final String name;
     private final Hasher hasher;
-    private final int replicationFactor;
+    private final int partitionFactor;
 
-    ConsistentHashRing(Hasher hasher, int replicationFactor) {
+    HashRing(String name, Hasher hasher, int partitionFactor) {
+        this.name = name;
         this.hasher = hasher;
-        this.replicationFactor = replicationFactor;
+        this.partitionFactor = partitionFactor;
+    }
+
+    public static <T extends Node> HashRingBuilder<T> newBuilder() {
+        return new HashRingBuilder<>();
+    }
+
+    @Override
+    public String getName() {
+        return name;
     }
 
     @Override
@@ -27,10 +43,10 @@ final class ConsistentHashRing<T extends Node> implements ConsistentHash<T> {
         mutex.writeLock().lock();
         boolean added = false;
         try {
-            if (!members.containsKey(node)) {
+            if (!nodes.containsKey(node)) {
                 Set<Partition<T>> partitions = createPartitions(node);
                 distributePartitions(partitions);
-                members.put(node, partitions);
+                nodes.put(node, partitions);
                 added = true;
             }
         } finally {
@@ -45,15 +61,14 @@ final class ConsistentHashRing<T extends Node> implements ConsistentHash<T> {
         boolean added = false;
         try {
             nodes = nodes.stream()
-                    .filter(n -> !members.containsKey(n))
+                    .filter(n -> !this.nodes.containsKey(n))
                     .collect(Collectors.toSet());
-
+            for (T node : nodes) {
+                Set<Partition<T>> partitions = createPartitions(node);
+                distributePartitions(partitions);
+                this.nodes.put(node, partitions);
+            }
             if (!nodes.isEmpty()) {
-                for (T node : nodes) {
-                    Set<Partition<T>> partitions = createPartitions(node);
-                    distributePartitions(partitions);
-                    members.put(node, partitions);
-                }
                 added = true;
             }
         } finally {
@@ -66,7 +81,7 @@ final class ConsistentHashRing<T extends Node> implements ConsistentHash<T> {
     public boolean contains(T node) {
         mutex.readLock().lock();
         try {
-            return members.containsKey(node);
+            return nodes.containsKey(node);
         } finally {
             mutex.readLock().unlock();
         }
@@ -77,8 +92,8 @@ final class ConsistentHashRing<T extends Node> implements ConsistentHash<T> {
         mutex.writeLock().lock();
         boolean removed = false;
         try {
-            if (members.containsKey(node)) {
-                Set<Partition<T>> partitions = members.remove(node);
+            if (nodes.containsKey(node)) {
+                Set<Partition<T>> partitions = nodes.remove(node);
                 partitions.forEach(p -> ring.remove(p.getSlot()));
                 removed = true;
             }
@@ -92,7 +107,7 @@ final class ConsistentHashRing<T extends Node> implements ConsistentHash<T> {
     public Set<T> getNodes() {
         mutex.readLock().lock();
         try {
-            return new HashSet<>(members.keySet());
+            return new HashSet<>(nodes.keySet());
         } finally {
             mutex.readLock().unlock();
         }
@@ -103,38 +118,44 @@ final class ConsistentHashRing<T extends Node> implements ConsistentHash<T> {
         mutex.readLock().lock();
         try {
             long slot = hash(key);
-            Map.Entry<Long, Partition<T>> e = ring.ceilingEntry(slot);
-            if (e == null) {
-                e = ring.firstEntry();
-            }
-            return Optional.ofNullable(e != null ? e.getValue().getNode() : null);
+            return locatePartition(slot)
+                    .map(Partition::getNode);
         } finally {
             mutex.readLock().unlock();
         }
     }
 
     @Override
-    public Set<T> locate(String key, int count) {
-        throw new UnsupportedOperationException("`locateN` method is not supported");
+    public Set<T> locate(String partitionKey, int count) {
+        mutex.readLock().lock();
+        Set<T> res = new HashSet<>();
+        try {
+            if (count >= nodes.size()) {
+                return new HashSet<>(nodes.keySet());
+            }
+            long slot = hash(partitionKey);
+            res.addAll(findNodes(ring.tailMap(slot), count));
+            res.addAll(findNodes(ring.headMap(slot), count - res.size()));
+        } finally {
+            mutex.readLock().unlock();
+        }
+        return res;
     }
 
     @Override
     public int size() {
         mutex.readLock().lock();
         try {
-            return members.size();
+            return nodes.size();
         } finally {
             mutex.readLock().unlock();
         }
     }
 
     private Set<Partition<T>> createPartitions(T node) {
-        Set<Partition<T>> partitions = new HashSet<>();
-        for (int i = 0; i < replicationFactor; i++) {
-            Partition<T> p = new ReplicationPartition<>(i, node);
-            partitions.add(p);
-        }
-        return partitions;
+        return IntStream.range(0, partitionFactor)
+                .mapToObj(idx -> new ReplicationPartition<>(idx, node))
+                .collect(Collectors.toSet());
     }
 
     private void distributePartitions(Set<Partition<T>> partitions) {
@@ -144,6 +165,22 @@ final class ConsistentHashRing<T extends Node> implements ConsistentHash<T> {
             part.setSlot(slot);
             ring.put(slot, part);
         }
+    }
+
+    private Optional<Partition<T>> locatePartition(long slot) {
+        Map.Entry<Long, Partition<T>> e = ring.ceilingEntry(slot);
+        if (e == null) {
+            e = ring.firstEntry();
+        }
+        return Optional.ofNullable(e).map(Map.Entry::getValue);
+    }
+
+    private Set<T> findNodes(Map<Long, Partition<T>> seg, int count) {
+        return seg.values().stream()
+                .map(Partition::getNode)
+                .distinct()
+                .limit(count)
+                .collect(Collectors.toSet());
     }
 
     private long findSlot(String pk) {
