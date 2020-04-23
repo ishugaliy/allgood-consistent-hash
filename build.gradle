@@ -1,3 +1,5 @@
+apply plugin: 'jacoco'
+
 allprojects {
     group 'com.ishugaliy'
     version '1.0-SNAPSHOT'

@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class HashRingBuilderTest {
 
     @Test
-    @DisplayName("Create hash ring and check if all properties were properly set")
+    @DisplayName("Build hash ring and check if all properties were properly set")
     public void build_allPropertiesSet_fullyInitializedHashRing() {
         HashRing<SimpleNode> ring = HashRing.<SimpleNode>newBuilder()
                 .name("test_ring")
@@ -26,7 +26,7 @@ public class HashRingBuilderTest {
     }
 
     @Test
-    @DisplayName("Create hash ring without any parameters and check if all properties have default values")
+    @DisplayName("Build hash ring without any parameters and check if all properties have default values")
     public void build_nonePropertiesSet_hashRingWithDefaultProperties() {
         HashRing<SimpleNode> ring = HashRing.<SimpleNode>newBuilder().build();
 
@@ -35,5 +35,14 @@ public class HashRingBuilderTest {
         assertNotNull(ring.getHasher());
         assertTrue(ring.getPartitionRate() > 0);
         assertTrue(ring.getNodes().isEmpty());
+    }
+
+    @Test
+    @DisplayName("Build hash ring with negative partitionRate, expected exception")
+    public void build_negativePartitionRate_exceptionThrown() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> HashRing.<SimpleNode>newBuilder().partitionRate(-1).build()
+        );
     }
 }

@@ -11,8 +11,6 @@ final class HashRingBuilder<T extends Node> {
     private int partitionRate = 1000;
     private Collection<T> nodes = Collections.emptyList();
 
-    public HashRingBuilder() { }
-
     public HashRingBuilder<T> name(String name) {
         Objects.requireNonNull(name, "Name can not be null");
         this.name = name;
