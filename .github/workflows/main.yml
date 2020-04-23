@@ -36,5 +36,5 @@ jobs:
         CC_TEST_REPORTER_ID: 13eeb4d2a2bda3b198158bcd91bfed140268639117e95af70711c12a908af990
         JACOCO_SOURCE_PATH: "${{github.workspace}}/src/main/java"
       with:
-        coverageCode: ./gradlew jacocoTestReport
+        coverageCommand: ./gradlew jacocoTestReport
         coverageLocations: "${{github.workspace}}/build/reports/jacoco/test/jacocoTestReport.xml:jacoco"
