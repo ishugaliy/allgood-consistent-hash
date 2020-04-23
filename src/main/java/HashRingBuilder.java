@@ -8,7 +8,7 @@ final class HashRingBuilder<T extends Node> {
 
     private String name;
     private Hasher hash;
-    private int partitionFactor = 1000;
+    private int partitionRate = 1000;
     private Collection<T> nodes = Collections.emptyList();
 
     public HashRingBuilder() { }
@@ -24,11 +24,11 @@ final class HashRingBuilder<T extends Node> {
         return this;
     }
 
-    public HashRingBuilder<T> partitionRate(int partitionFactor) {
-        if (partitionFactor < 1) {
+    public HashRingBuilder<T> partitionRate(int partitionRate) {
+        if (partitionRate < 1) {
             throw new IllegalArgumentException("Replication Factor can not be less than 1");
         }
-        this.partitionFactor = partitionFactor;
+        this.partitionRate = partitionRate;
         return this;
     }
 
@@ -43,7 +43,7 @@ final class HashRingBuilder<T extends Node> {
         name = name != null ? name : generateName();
         hash = hash != null ? hash : DefaultHasher.MURMUR_3;
 
-        HashRing<T> ring = new HashRing<>(name, hash, partitionFactor);
+        HashRing<T> ring = new HashRing<>(name, hash, partitionRate);
         ring.addAll(new ArrayList<>(nodes));
 
         return ring;

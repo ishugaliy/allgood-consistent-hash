@@ -20,22 +20,17 @@ public final class HashRing<T extends Node> implements ConsistentHash<T> {
     private final NavigableMap<Long, Partition<T>> ring = new TreeMap<>();
 
     private final String name;
-    private final Hasher hash;
-    private final int partitionFactor;
+    private final Hasher hasher;
+    private final int partitionRate;
 
-    HashRing(String name, Hasher hash, int partitionFactor) {
+    HashRing(String name, Hasher hasher, int partitionRate) {
         this.name = name;
-        this.hash = hash;
-        this.partitionFactor = partitionFactor;
+        this.hasher = hasher;
+        this.partitionRate = partitionRate;
     }
 
     public static <T extends Node> HashRingBuilder<T> newBuilder() {
         return new HashRingBuilder<>();
-    }
-
-    @Override
-    public String getName() {
-        return name;
     }
 
     @Override
@@ -143,6 +138,11 @@ public final class HashRing<T extends Node> implements ConsistentHash<T> {
     }
 
     @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
     public int size() {
         mutex.readLock().lock();
         try {
@@ -152,8 +152,16 @@ public final class HashRing<T extends Node> implements ConsistentHash<T> {
         }
     }
 
+    public Hasher getHasher() {
+        return hasher;
+    }
+
+    public int getPartitionRate() {
+        return partitionRate;
+    }
+
     private Set<Partition<T>> createPartitions(T node) {
-        return IntStream.range(0, partitionFactor)
+        return IntStream.range(0, partitionRate)
                 .mapToObj(idx -> new ReplicationPartition<>(idx, node))
                 .collect(Collectors.toSet());
     }
@@ -176,7 +184,8 @@ public final class HashRing<T extends Node> implements ConsistentHash<T> {
     }
 
     private Set<T> findNodes(Map<Long, Partition<T>> seg, int count) {
-        return seg.values().stream()
+        return seg.values()
+                .stream()
                 .map(Partition::getNode)
                 .distinct()
                 .limit(count)
@@ -197,6 +206,6 @@ public final class HashRing<T extends Node> implements ConsistentHash<T> {
     }
 
     private long hash(String key, int seed) {
-        return Math.abs(hash.hash(key, seed));
+        return Math.abs(hasher.hash(key, seed));
     }
 }

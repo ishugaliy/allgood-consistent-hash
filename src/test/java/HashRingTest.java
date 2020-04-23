@@ -5,12 +5,6 @@ public class HashRingTest {
 
     @Test
     public void test() {
-//        EqualsTester
-
-        Assertions.assertTrue(1 > 0);
 
     }
-
-
-
 }
