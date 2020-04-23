@@ -1,3 +1,4 @@
 dependencies {
-    compileOnly rootProject
+    implementation rootProject
+    implementation group: 'ch.qos.logback', name: 'logback-core', version: '1.2.3'
 }

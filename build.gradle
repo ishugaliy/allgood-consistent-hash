@@ -16,8 +16,8 @@ allprojects {
 }
 
 dependencies {
-    compileOnly group: 'net.openhft', name: 'zero-allocation-hashing', version: '0.11'
-    compileOnly group: 'org.slf4j', name: 'slf4j-api', version: '1.7.30'
+    implementation group: 'org.slf4j', name: 'slf4j-api', version: '1.7.30'
+    implementation group: 'net.openhft', name: 'zero-allocation-hashing', version: '0.11'
 
     testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.6.2'
     testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.6.2'
