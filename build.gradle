@@ -17,6 +17,13 @@ allprojects {
     }
 }
 
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        html.enabled true
+    }
+}
+
 dependencies {
     implementation group: 'org.slf4j', name: 'slf4j-api', version: '1.7.30'
     implementation group: 'net.openhft', name: 'zero-allocation-hashing', version: '0.11'
