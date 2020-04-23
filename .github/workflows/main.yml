@@ -29,3 +29,8 @@ jobs:
 
     - name: Build with Gradle
       run: ./gradlew build jacocoTestReport
+
+    - name: Upload test report
+      run: |
+        ./cc-test-reporter format-coverage build/reports/jacoco/test/jacocoTestReport.xml -t jacoco
+        ./cc-test-reporter upload-coverage
