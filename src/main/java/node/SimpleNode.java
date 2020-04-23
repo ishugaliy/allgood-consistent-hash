@@ -1,19 +1,18 @@
 package node;
 
-import com.google.common.base.MoreObjects;
-
 import java.util.Objects;
 
-public class StringNode implements Node {
+public class SimpleNode implements Node {
 
     private final String value;
 
-    private StringNode(String value) {
+    private SimpleNode(String value) {
+        Objects.requireNonNull(value, "Value can not be null");
         this.value = value;
     }
 
-    public static StringNode of(String value) {
-        return new StringNode(value);
+    public static SimpleNode of(String value) {
+        return new SimpleNode(value);
     }
 
     @Override
@@ -24,8 +23,8 @@ public class StringNode implements Node {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof StringNode)) return false;
-        StringNode that = (StringNode) o;
+        if (!(o instanceof SimpleNode)) return false;
+        SimpleNode that = (SimpleNode) o;
         return Objects.equals(value, that.value);
     }
 
@@ -36,8 +35,6 @@ public class StringNode implements Node {
 
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(this)
-                .add("value", value)
-                .toString();
+        return value;
     }
 }

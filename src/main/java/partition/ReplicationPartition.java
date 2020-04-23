@@ -1,9 +1,9 @@
 package partition;
 
-import com.google.common.base.MoreObjects;
 import node.Node;
 
 import java.util.Objects;
+import java.util.StringJoiner;
 
 public final class ReplicationPartition<T extends Node> implements Partition<T> {
 
@@ -12,8 +12,14 @@ public final class ReplicationPartition<T extends Node> implements Partition<T> 
     private long slot;
 
     public ReplicationPartition(int index, T node) {
+        Objects.requireNonNull(node, "Node can not be null");
         this.index = index;
         this.node = node;
+    }
+
+    public ReplicationPartition(int index, T node, long slot) {
+        this(index, node);
+        this.slot = slot;
     }
 
     @Override
@@ -53,10 +59,10 @@ public final class ReplicationPartition<T extends Node> implements Partition<T> 
 
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(this)
-                .add("index", index)
-                .add("slot", slot)
-                .add("partitionKey", getPartitionKey())
+        return new StringJoiner(", ", ReplicationPartition.class.getSimpleName() + "[", "]")
+                .add("index=" + index)
+                .add("key=" + getPartitionKey())
+                .add("slot=" + slot)
                 .toString();
     }
 }

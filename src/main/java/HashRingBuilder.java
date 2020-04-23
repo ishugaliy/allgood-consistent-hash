@@ -1,28 +1,26 @@
+import hash.DefaultHasher;
 import hash.Hasher;
-import hash.Murmur3Hasher;
 import node.Node;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
+import java.util.*;
 
-class HashRingBuilder<T extends Node> {
+final class HashRingBuilder<T extends Node> {
 
-    private String name = "";
-    private Hasher hasher;
-    private int partitionFactor = 10;
+    private String name;
+    private Hasher hash;
+    private int partitionFactor = 1000;
     private Collection<T> nodes = Collections.emptyList();
 
     public HashRingBuilder() { }
 
     public HashRingBuilder<T> name(String name) {
-        assertNotNull(name, "Name can not be null");
+        Objects.requireNonNull(name, "Name can not be null");
         this.name = name;
         return this;
     }
 
-    public HashRingBuilder<T> hasher(Hasher hasher) {
-        this.hasher = hasher;
+    public HashRingBuilder<T> hasher(Hasher hash) {
+        this.hash = hash;
         return this;
     }
 
@@ -35,21 +33,23 @@ class HashRingBuilder<T extends Node> {
     }
 
     public HashRingBuilder<T> nodes(Collection<T> nodes) {
-        assertNotNull(nodes, "Nodes list can not be null");
+        Objects.requireNonNull(name, "Name can not be null");
+        Objects.requireNonNull(nodes, "Nodes list can not be null");
         this.nodes = nodes;
         return this;
     }
 
     public HashRing<T> build() {
-        hasher = hasher != null ? hasher : new Murmur3Hasher();
-        HashRing<T> ring = new HashRing<>(name, hasher, partitionFactor);
+        name = name != null ? name : generateName();
+        hash = hash != null ? hash : DefaultHasher.MURMUR_3;
+
+        HashRing<T> ring = new HashRing<>(name, hash, partitionFactor);
         ring.addAll(new ArrayList<>(nodes));
+
         return ring;
     }
 
-    private void assertNotNull(Object value, String message) {
-        if (value == null) {
-            throw new IllegalArgumentException(message);
-        }
+    private String generateName() {
+        return "hash_ring_" + new Random().nextInt(10_000);
     }
 }

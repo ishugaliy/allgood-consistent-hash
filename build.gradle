@@ -1,20 +1,24 @@
-plugins {
-    id 'java'
-}
+allprojects {
+    group 'com.ishugaliy'
+    version '1.0-SNAPSHOT'
 
-group 'com.ishugaliy'
-version '1.0-SNAPSHOT'
+    apply plugin: 'java'
 
-sourceCompatibility = 1.8
+    sourceCompatibility = 1.8
 
-repositories {
-    mavenCentral()
+    repositories {
+        mavenCentral()
+    }
+
+    test {
+        useJUnitPlatform()
+    }
 }
 
 dependencies {
-    compile group: 'com.google.guava', name: 'guava', version: '28.2-jre'
-    compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.30'
+    compileOnly group: 'net.openhft', name: 'zero-allocation-hashing', version: '0.11'
+    compileOnly group: 'org.slf4j', name: 'slf4j-api', version: '1.7.30'
 
-    testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.6.2'
-    testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.6.2'
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.6.2'
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.6.2'
 }

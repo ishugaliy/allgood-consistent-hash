@@ -1,10 +1,9 @@
 package node;
 
-import com.google.common.base.MoreObjects;
-
 import java.util.Objects;
+import java.util.StringJoiner;
 
-public final class ServerNode implements Node {
+public class ServerNode implements Node {
     private final String dc;
     private final String ip;
     private final int port;
@@ -14,8 +13,8 @@ public final class ServerNode implements Node {
     }
 
     public ServerNode(String dc, String ip, int port) {
-        this.dc = dc;
-        this.ip = ip;
+        this.dc = dc != null ? dc : "";
+        this.ip = ip != null ? ip : "";
         this.port = port;
     }
 
@@ -53,10 +52,10 @@ public final class ServerNode implements Node {
 
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(this)
-                .add("dc", dc)
-                .add("ip", ip)
-                .add("port", port)
+        return new StringJoiner(", ", ServerNode.class.getSimpleName() + "[", "]")
+                .add("dc='" + dc + "'")
+                .add("ip='" + ip + "'")
+                .add("port=" + port)
                 .toString();
     }
 }

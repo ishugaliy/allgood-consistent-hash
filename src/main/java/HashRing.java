@@ -20,12 +20,12 @@ public final class HashRing<T extends Node> implements ConsistentHash<T> {
     private final NavigableMap<Long, Partition<T>> ring = new TreeMap<>();
 
     private final String name;
-    private final Hasher hasher;
+    private final Hasher hash;
     private final int partitionFactor;
 
-    HashRing(String name, Hasher hasher, int partitionFactor) {
+    HashRing(String name, Hasher hash, int partitionFactor) {
         this.name = name;
-        this.hasher = hasher;
+        this.hash = hash;
         this.partitionFactor = partitionFactor;
     }
 
@@ -197,6 +197,6 @@ public final class HashRing<T extends Node> implements ConsistentHash<T> {
     }
 
     private long hash(String key, int seed) {
-        return Math.abs(hasher.hash(key, seed));
+        return Math.abs(hash.hash(key, seed));
     }
 }
