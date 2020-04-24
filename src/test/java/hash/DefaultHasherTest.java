@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.DynamicTest.*;
 
 public class DefaultHasherTest {
 
@@ -19,7 +20,7 @@ public class DefaultHasherTest {
 
         return Arrays
                 .stream(DefaultHasher.values())
-                .map(hasher -> DynamicTest.dynamicTest(
+                .map(hasher -> dynamicTest(
                         hasher.name(),
                         () -> assertTrue(hasher.hash(key, seed) != 0))
                 );
@@ -34,7 +35,7 @@ public class DefaultHasherTest {
 
         return Arrays
                 .stream(DefaultHasher.values())
-                .map(hasher -> DynamicTest.dynamicTest(
+                .map(hasher -> dynamicTest(
                         hasher.name(),
                         () -> assertNotEquals(hasher.hash(key1, seed), hasher.hash(key2, seed)))
                 );

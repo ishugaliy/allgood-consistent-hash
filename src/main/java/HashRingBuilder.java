@@ -31,7 +31,6 @@ final class HashRingBuilder<T extends Node> {
     }
 
     public HashRingBuilder<T> nodes(Collection<T> nodes) {
-        Objects.requireNonNull(name, "Name can not be null");
         Objects.requireNonNull(nodes, "Nodes list can not be null");
         this.nodes = nodes;
         return this;
@@ -42,8 +41,7 @@ final class HashRingBuilder<T extends Node> {
         hash = hash != null ? hash : DefaultHasher.MURMUR_3;
 
         HashRing<T> ring = new HashRing<>(name, hash, partitionRate);
-        ring.addAll(new ArrayList<>(nodes));
-
+        ring.addAll(nodes);
         return ring;
     }
 

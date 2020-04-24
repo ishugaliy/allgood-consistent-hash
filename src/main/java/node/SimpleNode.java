@@ -1,5 +1,7 @@
 package node;
 
+import annotation.Generated;
+
 import java.util.Objects;
 
 public class SimpleNode implements Node {
@@ -34,6 +36,7 @@ public class SimpleNode implements Node {
     }
 
     @Override
+    @Generated
     public String toString() {
         return value;
     }

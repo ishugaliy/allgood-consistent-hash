@@ -1,3 +1,4 @@
+import annotation.Generated;
 import hash.Hasher;
 import node.Node;
 import org.slf4j.Logger;
@@ -38,7 +39,7 @@ public final class HashRing<T extends Node> implements ConsistentHash<T> {
         mutex.writeLock().lock();
         boolean added = false;
         try {
-            if (!nodes.containsKey(node)) {
+            if (node != null && !nodes.containsKey(node)) {
                 Set<Partition<T>> partitions = createPartitions(node);
                 distributePartitions(partitions);
                 nodes.put(node, partitions);
@@ -53,9 +54,11 @@ public final class HashRing<T extends Node> implements ConsistentHash<T> {
     @Override
     public boolean addAll(Collection<T> nodes) {
         mutex.writeLock().lock();
+        nodes = nodes != null ? new ArrayList<>(nodes) : Collections.emptyList();
         boolean added = false;
         try {
             nodes = nodes.stream()
+                    .filter(Objects::nonNull)
                     .filter(n -> !this.nodes.containsKey(n))
                     .collect(Collectors.toSet());
             for (T node : nodes) {
@@ -111,26 +114,33 @@ public final class HashRing<T extends Node> implements ConsistentHash<T> {
     @Override
     public Optional<T> locate(String key) {
         mutex.readLock().lock();
+        Optional<T> node = Optional.empty();
         try {
-            long slot = hash(key);
-            return locatePartition(slot)
-                    .map(Partition::getNode);
+            if (key != null) {
+                long slot = hash(key);
+                node = locatePartition(slot).map(Partition::getNode);
+            }
         } finally {
             mutex.readLock().unlock();
         }
+        return node;
     }
 
     @Override
-    public Set<T> locate(String partitionKey, int count) {
+    public Set<T> locate(String key, int count) {
         mutex.readLock().lock();
         Set<T> res = new HashSet<>();
         try {
-            if (count >= nodes.size()) {
-                return new HashSet<>(nodes.keySet());
+            if (key == null || count <= 0) {
+                return Collections.emptySet();
             }
-            long slot = hash(partitionKey);
-            res.addAll(findNodes(ring.tailMap(slot), count));
-            res.addAll(findNodes(ring.headMap(slot), count - res.size()));
+            if (count < nodes.size()) {
+                long slot = hash(key);
+                res.addAll(findNodes(ring.tailMap(slot), count));
+                res.addAll(findNodes(ring.headMap(slot), count - res.size()));
+            } else {
+                res.addAll(nodes.keySet());
+            }
         } finally {
             mutex.readLock().unlock();
         }
@@ -207,5 +217,16 @@ public final class HashRing<T extends Node> implements ConsistentHash<T> {
 
     private long hash(String key, int seed) {
         return Math.abs(hasher.hash(key, seed));
+    }
+
+    @Override
+    @Generated
+    public String toString() {
+        return new StringJoiner(", ", HashRing.class.getSimpleName() + "[", "]")
+                .add("nodes= " + nodes.size())
+                .add("name= '" + name + "'")
+                .add("hasher= " + hasher)
+                .add("partitionRate= " + partitionRate)
+                .toString();
     }
 }

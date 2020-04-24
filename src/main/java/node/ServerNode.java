@@ -1,5 +1,7 @@
 package node;
 
+import annotation.Generated;
+
 import java.util.Objects;
 import java.util.StringJoiner;
 
@@ -51,6 +53,7 @@ public class ServerNode implements Node {
     }
 
     @Override
+    @Generated
     public String toString() {
         return new StringJoiner(", ", ServerNode.class.getSimpleName() + "[", "]")
                 .add("dc='" + dc + "'")

@@ -1,5 +1,6 @@
 package partition;
 
+import annotation.Generated;
 import node.Node;
 
 import java.util.Objects;
@@ -20,6 +21,10 @@ public final class ReplicationPartition<T extends Node> implements Partition<T> 
     public ReplicationPartition(int index, T node, long slot) {
         this(index, node);
         this.slot = slot;
+    }
+
+    public int getIndex() {
+        return index;
     }
 
     @Override
@@ -58,6 +63,7 @@ public final class ReplicationPartition<T extends Node> implements Partition<T> 
     }
 
     @Override
+    @Generated
     public String toString() {
         return new StringJoiner(", ", ReplicationPartition.class.getSimpleName() + "[", "]")
                 .add("index=" + index)
