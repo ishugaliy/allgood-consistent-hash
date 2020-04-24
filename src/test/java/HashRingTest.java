@@ -119,7 +119,7 @@ public class HashRingTest {
                         }),
                 dynamicTest("Add null node list, expected false",
                         () -> {
-                            assertFalse(ring.add(null));
+                            assertFalse(ring.addAll(null));
                             assertEquals(3, ring.size());
                         })
         );

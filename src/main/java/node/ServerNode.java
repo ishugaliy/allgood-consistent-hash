@@ -38,6 +38,7 @@ public class ServerNode implements Node {
     }
 
     @Override
+    @Generated
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof ServerNode)) return false;
@@ -48,6 +49,7 @@ public class ServerNode implements Node {
     }
 
     @Override
+    @Generated
     public int hashCode() {
         return Objects.hash(dc, ip, port);
     }

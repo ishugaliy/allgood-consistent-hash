@@ -48,6 +48,7 @@ public final class ReplicationPartition<T extends Node> implements Partition<T> 
     }
 
     @Override
+    @Generated
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof ReplicationPartition)) return false;
@@ -58,6 +59,7 @@ public final class ReplicationPartition<T extends Node> implements Partition<T> 
     }
 
     @Override
+    @Generated
     public int hashCode() {
         return Objects.hash(index, node, slot);
     }

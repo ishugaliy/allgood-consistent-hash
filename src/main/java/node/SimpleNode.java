@@ -23,6 +23,7 @@ public class SimpleNode implements Node {
     }
 
     @Override
+    @Generated
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof SimpleNode)) return false;
@@ -31,6 +32,7 @@ public class SimpleNode implements Node {
     }
 
     @Override
+    @Generated
     public int hashCode() {
         return Objects.hash(value);
     }
