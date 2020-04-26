@@ -1,7 +1,7 @@
-package partition;
+package org.ishugaliy.consistent.hash.partition;
 
-import annotation.Generated;
-import node.Node;
+import org.ishugaliy.consistent.hash.annotation.Generated;
+import org.ishugaliy.consistent.hash.node.Node;
 
 import java.util.Objects;
 import java.util.StringJoiner;

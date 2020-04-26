@@ -1,4 +1,4 @@
-package node;
+package org.ishugaliy.consistent.hash.node;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DynamicTest;

@@ -1,4 +1,4 @@
-package hash;
+package org.ishugaliy.consistent.hash.hasher;
 
 @FunctionalInterface
 public interface Hasher {

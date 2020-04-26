@@ -1,5 +1,6 @@
-import hash.DefaultHasher;
-import node.SimpleNode;
+import org.ishugaliy.consistent.hash.HashRing;
+import org.ishugaliy.consistent.hash.hasher.DefaultHasher;
+import org.ishugaliy.consistent.hash.node.SimpleNode;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

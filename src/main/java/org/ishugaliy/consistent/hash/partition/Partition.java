@@ -1,6 +1,6 @@
-package partition;
+package org.ishugaliy.consistent.hash.partition;
 
-import node.Node;
+import org.ishugaliy.consistent.hash.node.Node;
 
 public interface Partition<T extends Node> {
 

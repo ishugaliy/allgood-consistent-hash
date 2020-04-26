@@ -1,10 +1,12 @@
-import annotation.Generated;
-import hash.Hasher;
-import node.Node;
+package org.ishugaliy.consistent.hash;
+
+import org.ishugaliy.consistent.hash.annotation.Generated;
+import org.ishugaliy.consistent.hash.hasher.Hasher;
+import org.ishugaliy.consistent.hash.node.Node;
+import org.ishugaliy.consistent.hash.partition.Partition;
+import org.ishugaliy.consistent.hash.partition.ReplicationPartition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import partition.Partition;
-import partition.ReplicationPartition;
 
 import java.util.*;
 import java.util.concurrent.locks.ReadWriteLock;
@@ -14,7 +16,7 @@ import java.util.stream.IntStream;
 
 public final class HashRing<T extends Node> implements ConsistentHash<T> {
 
-    private static final Logger LOG = LoggerFactory.getLogger(HashRing.class);
+    private static final Logger log = LoggerFactory.getLogger(HashRing.class);
 
     private final ReadWriteLock mutex = new ReentrantReadWriteLock(true);
     private final Map<T, Set<Partition<T>>> nodes = new HashMap<>();
@@ -116,7 +118,7 @@ public final class HashRing<T extends Node> implements ConsistentHash<T> {
         mutex.readLock().lock();
         Optional<T> node = Optional.empty();
         try {
-            if (key != null) {
+            if (key != null && size() > 0) {
                 long slot = hash(key);
                 node = locatePartition(slot).map(Partition::getNode);
             }

@@ -1,4 +1,4 @@
-package hash;
+package org.ishugaliy.consistent.hash.hasher;
 
 import net.openhft.hashing.LongHashFunction;
 

@@ -1,10 +1,12 @@
-import hash.DefaultHasher;
-import hash.Hasher;
-import node.Node;
+package org.ishugaliy.consistent.hash;
+
+import org.ishugaliy.consistent.hash.hasher.DefaultHasher;
+import org.ishugaliy.consistent.hash.hasher.Hasher;
+import org.ishugaliy.consistent.hash.node.Node;
 
 import java.util.*;
 
-final class HashRingBuilder<T extends Node> {
+public final class HashRingBuilder<T extends Node> {
 
     private String name;
     private Hasher hash;

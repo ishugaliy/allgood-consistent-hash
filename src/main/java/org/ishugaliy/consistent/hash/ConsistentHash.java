@@ -1,4 +1,6 @@
-import node.Node;
+package org.ishugaliy.consistent.hash;
+
+import org.ishugaliy.consistent.hash.node.Node;
 
 import java.util.Collection;
 import java.util.Optional;

@@ -1,4 +1,4 @@
-package hash;
+package org.ishugaliy.consistent.hash.hasher;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DynamicTest;

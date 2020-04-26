@@ -1,6 +1,6 @@
-package node;
+package org.ishugaliy.consistent.hash.node;
 
-import annotation.Generated;
+import org.ishugaliy.consistent.hash.annotation.Generated;
 
 import java.util.Objects;
 

@@ -1,7 +1,7 @@
-package partition;
+package org.ishugaliy.consistent.hash.partition;
 
-import node.Node;
-import node.SimpleNode;
+import org.ishugaliy.consistent.hash.node.Node;
+import org.ishugaliy.consistent.hash.node.SimpleNode;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Test;

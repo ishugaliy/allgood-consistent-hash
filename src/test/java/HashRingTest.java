@@ -1,5 +1,6 @@
-import hash.Hasher;
-import node.Node;
+import org.ishugaliy.consistent.hash.HashRing;
+import org.ishugaliy.consistent.hash.hasher.Hasher;
+import org.ishugaliy.consistent.hash.node.Node;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Test;
@@ -12,9 +13,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.ArrayList;
 import java.util.stream.Stream;
 
-import static hash.DefaultHasher.METRO_HASH;
 import static java.util.Arrays.asList;
 import static java.util.Collections.singleton;
+import static org.ishugaliy.consistent.hash.hasher.DefaultHasher.METRO_HASH;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 import static org.mockito.Mockito.*;
@@ -25,7 +26,11 @@ public class HashRingTest {
     @Test
     @DisplayName("Create ring via constructor, check all properties were set")
     public void constructor_allProperties_instance() {
-        HashRing<Node> ring = new HashRing<>("ring", METRO_HASH, 1);
+        HashRing<Node> ring = HashRing.newBuilder()
+                .name("ring")
+                .hasher(METRO_HASH)
+                .partitionRate(1)
+                .build();
 
         assertEquals("ring", ring.getName());
         assertEquals(METRO_HASH, ring.getHasher());
@@ -151,7 +156,7 @@ public class HashRingTest {
 
     @Test
     @DisplayName("Get nodes from empty ring, expected empty list")
-    public void getNodes_emptyRing_nodesList() {
+    public void getNodes_emptyRing_emptyList() {
         HashRing<Node> ring = HashRing.newBuilder().build();
         assertTrue(ring.getNodes().isEmpty());
     }

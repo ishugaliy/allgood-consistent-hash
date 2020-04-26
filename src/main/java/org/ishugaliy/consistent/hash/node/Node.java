@@ -1,4 +1,4 @@
-package node;
+package org.ishugaliy.consistent.hash.node;
 
 public interface Node {
 
