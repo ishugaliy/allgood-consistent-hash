@@ -1,3 +1,5 @@
+package org.ishugaliy.consistent.hash;
+
 import org.ishugaliy.consistent.hash.HashRing;
 import org.ishugaliy.consistent.hash.hasher.DefaultHasher;
 import org.ishugaliy.consistent.hash.node.SimpleNode;

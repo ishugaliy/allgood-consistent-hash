@@ -1,6 +1,6 @@
 package org.ishugaliy.consistent.hash.samples;
 
-import org.ishugaliy.consistent.hash.samples.analyze.HashRingAnalyzer;
+import org.ishugaliy.consistent.hash.samples.analysis.HashRingMetrics;
 import org.ishugaliy.consistent.hash.ConsistentHash;
 import org.ishugaliy.consistent.hash.HashRing;
 import org.ishugaliy.consistent.hash.hasher.DefaultHasher;
@@ -18,6 +18,7 @@ public class HasherLoadDistributionSample {
 
     private static final int NODES_COUNT = 10;
     private static final int REQUESTS_COUNT = 100_000;
+    private static final int PARTITION_RATE = 1000;
 
     public static void main(String[] args) {
         // Create test nodes
@@ -37,8 +38,8 @@ public class HasherLoadDistributionSample {
 
         // Print load distribution for all rings
         rings.stream()
-                .map(ring -> (HashRingAnalyzer) ring)
-                .forEach(HashRingAnalyzer::printLoadDistribution);
+                .map(ring -> (HashRingMetrics) ring)
+                .forEach(HashRingMetrics::printLoadDistribution);
     }
 
     private static Set<SimpleNode> buildNodes() {
@@ -47,13 +48,12 @@ public class HasherLoadDistributionSample {
                 .collect(Collectors.toSet());
     }
 
-    /**
-     * Build Hash ring for provided hasher and wrap it with ConsistentHashAnalyzer decorator.
-     */
+    // Build Hash ring for provided hasher and wrap it with HashRingMetrics decorator.
     private static ConsistentHash<SimpleNode> buildRing(DefaultHasher hasher) {
-        return new HashRingAnalyzer<>(
+        return new HashRingMetrics<>(
                 HashRing.<SimpleNode>newBuilder()
                         .name(hasher.name().toLowerCase() + "_ring")
+                        .partitionRate(PARTITION_RATE)
                         .hasher(hasher)
                         .build()
         );

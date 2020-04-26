@@ -196,12 +196,15 @@ public final class HashRing<T extends Node> implements ConsistentHash<T> {
     }
 
     private Set<T> findNodes(Map<Long, Partition<T>> seg, int count) {
-        return seg.values()
-                .stream()
-                .map(Partition::getNode)
-                .distinct()
-                .limit(count)
-                .collect(Collectors.toSet());
+        Set<T> nodes = new HashSet<>();
+        Iterator<Partition<T>> it = seg.values().iterator();
+        while (it.hasNext() && count > 0) {
+            Partition<T> part = it.next();
+            if (nodes.add(part.getNode())) {
+                count--;
+            }
+        }
+        return nodes;
     }
 
     private long findSlot(String pk) {
@@ -210,6 +213,7 @@ public final class HashRing<T extends Node> implements ConsistentHash<T> {
         do {
             slot = hash(pk, seed++);
         } while (ring.containsKey(slot));
+
         return slot;
     }
 

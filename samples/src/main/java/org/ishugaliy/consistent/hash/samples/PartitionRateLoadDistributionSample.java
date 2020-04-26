@@ -2,7 +2,7 @@ package org.ishugaliy.consistent.hash.samples;
 
 import org.ishugaliy.consistent.hash.HashRing;
 import org.ishugaliy.consistent.hash.node.SimpleNode;
-import org.ishugaliy.consistent.hash.samples.analyze.HashRingAnalyzer;
+import org.ishugaliy.consistent.hash.samples.analysis.HashRingMetrics;
 
 import java.util.Set;
 import java.util.UUID;
@@ -18,19 +18,19 @@ public class PartitionRateLoadDistributionSample {
         // Build test nodes
         Set<SimpleNode> nodes = buildNodes();
 
-        // Build hash ring with custom partition rate and wrap it with HashRingAnalyzer decorator
-        HashRingAnalyzer<SimpleNode> ring10000 = buildRing(10_000);
-        HashRingAnalyzer<SimpleNode> ring1000 = buildRing(1_000);
-        HashRingAnalyzer<SimpleNode> ring100 = buildRing(100);
-        HashRingAnalyzer<SimpleNode> ring10 = buildRing(10);
+        // Build hash ring with custom partition rate and wrap with HashRingMetrics decorator
+        HashRingMetrics<SimpleNode> ring10000 = buildRing(100_000);
+        HashRingMetrics<SimpleNode> ring1000 = buildRing(1_000);
+        HashRingMetrics<SimpleNode> ring100 = buildRing(100);
+        HashRingMetrics<SimpleNode> ring10 = buildRing(10);
 
-        // Add nodes to rings
+        // Add nodes to the rings
         ring10000.addAll(nodes);
         ring1000.addAll(nodes);
         ring100.addAll(nodes);
         ring10.addAll(nodes);
 
-        // Locate two nodes for each ring
+        // Locate node for each ring
         for (int i = 0; i < REQUESTS_COUNT; i++) {
             String key = UUID.randomUUID().toString();
             ring10000.locate(key);
@@ -47,8 +47,8 @@ public class PartitionRateLoadDistributionSample {
     }
 
     // Build hash ring with specific partition rate
-    private static HashRingAnalyzer<SimpleNode> buildRing(int partitionRate) {
-        return new HashRingAnalyzer<>(HashRing.<SimpleNode>newBuilder()
+    private static HashRingMetrics<SimpleNode> buildRing(int partitionRate) {
+        return new HashRingMetrics<>(HashRing.<SimpleNode>newBuilder()
                 .name(partitionRate + "_partition_ring")
                 .partitionRate(partitionRate)
                 .build());
