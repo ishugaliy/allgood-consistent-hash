@@ -1,4 +1,4 @@
-package org.ishugaliy.consistent.hash.samples.analysis;
+package org.ishugaliy.consistent.hash.samples.metrics;
 
 import org.ishugaliy.consistent.hash.ConsistentHash;
 import org.ishugaliy.consistent.hash.HashRing;
@@ -6,14 +6,15 @@ import org.ishugaliy.consistent.hash.node.Node;
 
 import java.util.*;
 
+import static java.lang.String.*;
+
 public class HashRingMetrics<T extends Node> implements ConsistentHash<T> {
 
     private final HashRing<T> target;
-
-    private final Map<String, Set<T>> keyNodes = new HashMap<>();
-
-
+    private final Map<String, Set<T>> keys = new HashMap<>();
     private final Map<T, Integer> loads = new HashMap<>();
+
+    private int missHits;
 
     public HashRingMetrics(HashRing<T> ring) {
         this.target = ring;
@@ -56,8 +57,13 @@ public class HashRingMetrics<T extends Node> implements ConsistentHash<T> {
     public Optional<T> locate(String key) {
         Optional<T> node = target.locate(key);
         node.ifPresent(n -> {
-            int cnt = loads.get(n);
+            int cnt = loads.getOrDefault(n, 0);
             loads.put(n, cnt + 1);
+            Set<T> prev = keys.computeIfAbsent(key, k -> new HashSet<>());
+            if (!prev.isEmpty() && !prev.contains(n)) {
+                missHits++;
+            }
+            prev.add(n);
         });
         return node;
     }
@@ -68,6 +74,11 @@ public class HashRingMetrics<T extends Node> implements ConsistentHash<T> {
         nodes.forEach(n -> {
             int cnt = loads.get(n);
             loads.put(n, cnt + 1);
+            Set<T> prev = keys.computeIfAbsent(key, k -> new HashSet<>());
+            if (!prev.isEmpty() && !prev.contains(n)) {
+                missHits++;
+            }
+            prev.add(n);
         });
         return nodes;
     }
@@ -100,6 +111,15 @@ public class HashRingMetrics<T extends Node> implements ConsistentHash<T> {
         System.out.println();
     }
 
+    public void printMissHits() {
+        System.out.println();
+        System.out.println("########## MISS HITS ############");
+        float sum = loads.values().stream().reduce(0, Integer::sum);
+        float percent = Math.round(missHits / sum * 100);
+        System.out.println("Nodes miss: [" + missHits + "] hits. - " + percent + "%");
+        System.out.println();
+    }
+
     public void printExtrema() {
         int min = Integer.MAX_VALUE;
         int max = Integer.MIN_VALUE;
@@ -107,7 +127,7 @@ public class HashRingMetrics<T extends Node> implements ConsistentHash<T> {
             if (cnt < min) min = cnt;
             if (cnt > max) max = cnt;
         }
-        System.out.println(String.format("min: [%d] max: [%d], delta: [%d]", min, max, max - min));
+        System.out.println(format("min: [%d] max: [%d], delta: [%d]", min, max, max - min));
         System.out.println("---");
     }
 
@@ -115,8 +135,8 @@ public class HashRingMetrics<T extends Node> implements ConsistentHash<T> {
         double avg = calculateArithmeticMean();
         double dispersion = calculateDispersion(avg);
         double stDeviation = Math.round(Math.sqrt(dispersion));
-        System.out.println("arithmetic mean: [" + avg + "]");
-        System.out.println("stan. deviation: [" + stDeviation + "]");
+        System.out.println("arithmetic mean: [" + avg + "] hits");
+        System.out.println("stan. deviation: [" + stDeviation + "] hits");
     }
 
     public double calculateDispersion(double avg) {

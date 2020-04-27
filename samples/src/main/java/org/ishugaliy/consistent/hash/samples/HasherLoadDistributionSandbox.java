@@ -1,6 +1,6 @@
 package org.ishugaliy.consistent.hash.samples;
 
-import org.ishugaliy.consistent.hash.samples.analysis.HashRingMetrics;
+import org.ishugaliy.consistent.hash.samples.metrics.HashRingMetrics;
 import org.ishugaliy.consistent.hash.ConsistentHash;
 import org.ishugaliy.consistent.hash.HashRing;
 import org.ishugaliy.consistent.hash.hasher.DefaultHasher;
@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @SuppressWarnings("all")
-public class HasherLoadDistributionSample {
+public class HasherLoadDistributionSandbox {
 
     private static final int NODES_COUNT = 10;
     private static final int REQUESTS_COUNT = 100_000;
@@ -26,7 +26,7 @@ public class HasherLoadDistributionSample {
 
         // Create hash ring for every default hasher
         List<ConsistentHash<SimpleNode>> rings = Arrays.stream(DefaultHasher.values())
-                .map(HasherLoadDistributionSample::buildRing)
+                .map(HasherLoadDistributionSandbox::buildRing)
                 .peek(ring -> ring.addAll(nodes))
                 .collect(Collectors.toList());
 

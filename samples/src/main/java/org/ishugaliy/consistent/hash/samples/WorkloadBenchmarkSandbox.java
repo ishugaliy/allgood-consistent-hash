@@ -11,8 +11,8 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-// TODO: use jmh benchmark instead - https://openjdk.java.net/projects/code-tools/jmh/
-public class WorkloadSample {
+// TODO: use JMH benchmark instead - https://openjdk.java.net/projects/code-tools/jmh/
+public class WorkloadBenchmarkSandbox {
 
     private static final Hasher HASHER = DefaultHasher.MURMUR_3;
     private static final int PARTITION_RATE = 1000;
