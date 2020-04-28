@@ -20,7 +20,7 @@ public class AdvancedBuildSample {
         // Build hash ring
         ConsistentHash<ServerNode> ring = HashRing.<ServerNode>newBuilder()
                 .name("file_cache_hash_ring")       // set hash ring name
-                .hasher(DefaultHasher.MURMUR_3)     // hash function to distribute partitions
+                .hasher(DefaultHasher.METRO_HASH)     // hash function to distribute partitions
                 .partitionRate(10)                  // number of partitions per node
                 .nodes(Arrays.asList(n1, n2))       // initial nodes list
                 .build();

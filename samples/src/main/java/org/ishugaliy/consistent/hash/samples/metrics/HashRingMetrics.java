@@ -111,11 +111,10 @@ public class HashRingMetrics<T extends Node> implements ConsistentHash<T> {
         System.out.println();
     }
 
-    public void printMissHits() {
+    public void printMissHits(int reqCount) {
         System.out.println();
         System.out.println("########## MISS HITS ############");
-        float sum = loads.values().stream().reduce(0, Integer::sum);
-        float percent = Math.round(missHits / sum * 100);
+        float percent = Math.round(missHits / (float) reqCount * 100);
         System.out.println("Nodes miss: [" + missHits + "] hits. - " + percent + "%");
         System.out.println();
     }
@@ -134,9 +133,10 @@ public class HashRingMetrics<T extends Node> implements ConsistentHash<T> {
     public void printStandardDeviation() {
         double avg = calculateArithmeticMean();
         double dispersion = calculateDispersion(avg);
-        double stDeviation = Math.round(Math.sqrt(dispersion));
+        double standDev = Math.round(Math.sqrt(dispersion));
+        double standDevPercent = Math.round(standDev / avg * 100);
         System.out.println("arithmetic mean: [" + avg + "] hits");
-        System.out.println("stan. deviation: [" + stDeviation + "] hits");
+        System.out.println("stan. deviation: [" + standDev + "] hits - " + standDevPercent + "%");
     }
 
     public double calculateDispersion(double avg) {

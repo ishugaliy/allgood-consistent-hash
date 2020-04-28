@@ -13,8 +13,8 @@ import java.util.stream.IntStream;
 
 public class NodesMissHitsSandbox {
 
-    private static final int NODES_COUNT = 10;
-    private static final int NODES_TO_REMOVE = 3;
+    private static final int NODES_COUNT = 100;
+    private static final int NODES_TO_REMOVE = 7;
     private static final int PARTITION_KEY = 1000;
     private static final int REQUESTS_COUNT = 100_000;
 
@@ -39,7 +39,7 @@ public class NodesMissHitsSandbox {
         }
 
         // Print stats, see 'Nodes miss hits' parameter
-        ring.printMissHits();
+        ring.printMissHits(REQUESTS_COUNT);
         ring.printLoadDistribution();
     }
 
