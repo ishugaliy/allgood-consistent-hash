@@ -9,7 +9,7 @@ import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class ModHashSample {
+public class ModHashSandox {
 
     private static final int NODES_COUNT = 100;
     private static final int NODES_TO_REMOVE = 1;
