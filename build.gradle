@@ -1,7 +1,7 @@
 apply plugin: 'jacoco'
 
 allprojects {
-    group 'com.ishugaliy'
+    group 'org.ishugaliy'
     version '1.0-SNAPSHOT'
 
     apply plugin: 'java'

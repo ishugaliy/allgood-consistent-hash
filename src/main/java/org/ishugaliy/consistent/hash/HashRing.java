@@ -14,9 +14,12 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import static java.util.Collections.emptyList;
+import static java.util.Collections.emptySet;
+
 public final class HashRing<T extends Node> implements ConsistentHash<T> {
 
-    private static final Logger log = LoggerFactory.getLogger(HashRing.class);
+    private static final Logger LOG = LoggerFactory.getLogger(HashRing.class);
 
     private final ReadWriteLock mutex = new ReentrantReadWriteLock(true);
     private final Map<T, Set<Partition<T>>> nodes = new HashMap<>();
@@ -39,42 +42,27 @@ public final class HashRing<T extends Node> implements ConsistentHash<T> {
     @Override
     public boolean add(T node) {
         mutex.writeLock().lock();
-        boolean added = false;
         try {
-            if (node != null && !nodes.containsKey(node)) {
-                Set<Partition<T>> partitions = createPartitions(node);
-                distributePartitions(partitions);
-                nodes.put(node, partitions);
-                added = true;
-            }
+            return addNode(node);
         } finally {
             mutex.writeLock().unlock();
         }
-        return added;
     }
 
     @Override
     public boolean addAll(Collection<T> nodes) {
         mutex.writeLock().lock();
-        nodes = nodes != null ? new ArrayList<>(nodes) : Collections.emptyList();
-        boolean added = false;
         try {
+            if (nodes == null) {
+                nodes = emptyList();
+            }
             nodes = nodes.stream()
-                    .filter(Objects::nonNull)
-                    .filter(n -> !this.nodes.containsKey(n))
-                    .collect(Collectors.toSet());
-            for (T node : nodes) {
-                Set<Partition<T>> partitions = createPartitions(node);
-                distributePartitions(partitions);
-                this.nodes.put(node, partitions);
-            }
-            if (!nodes.isEmpty()) {
-                added = true;
-            }
+                    .filter(this::addNode)
+                    .collect(Collectors.toList());
+            return !nodes.isEmpty();
         } finally {
             mutex.writeLock().unlock();
         }
-        return added;
     }
 
     @Override
@@ -118,9 +106,8 @@ public final class HashRing<T extends Node> implements ConsistentHash<T> {
         mutex.readLock().lock();
         Optional<T> node = Optional.empty();
         try {
-            if (key != null && size() > 0) {
-                long slot = hash(key);
-                node = locatePartition(slot).map(Partition::getNode);
+            if (key != null) {
+                node = findNodes(key, 1).stream().findAny();
             }
         } finally {
             mutex.readLock().unlock();
@@ -131,22 +118,15 @@ public final class HashRing<T extends Node> implements ConsistentHash<T> {
     @Override
     public Set<T> locate(String key, int count) {
         mutex.readLock().lock();
-        Set<T> res = new HashSet<>();
+        Set<T> nodes = emptySet();
         try {
-            if (key == null || count <= 0) {
-                return Collections.emptySet();
-            }
-            if (count < nodes.size()) {
-                long slot = hash(key);
-                res.addAll(findNodes(ring.tailMap(slot), count));
-                res.addAll(findNodes(ring.headMap(slot), count - res.size()));
-            } else {
-                res.addAll(nodes.keySet());
+            if (key != null && count > 0) {
+                nodes = findNodes(key, count);
             }
         } finally {
             mutex.readLock().unlock();
         }
-        return res;
+        return nodes;
     }
 
     @Override
@@ -172,6 +152,17 @@ public final class HashRing<T extends Node> implements ConsistentHash<T> {
         return partitionRate;
     }
 
+    private boolean addNode(T node) {
+        boolean added = false;
+        if (node != null && !nodes.containsKey(node)) {
+            Set<Partition<T>> partitions = createPartitions(node);
+            distributePartitions(partitions);
+            nodes.put(node, partitions);
+            added = true;
+        }
+        return added;
+    }
+
     private Set<Partition<T>> createPartitions(T node) {
         return IntStream.range(0, partitionRate)
                 .mapToObj(idx -> new ReplicationPartition<>(idx, node))
@@ -185,26 +176,6 @@ public final class HashRing<T extends Node> implements ConsistentHash<T> {
             part.setSlot(slot);
             ring.put(slot, part);
         }
-    }
-
-    private Optional<Partition<T>> locatePartition(long slot) {
-        Map.Entry<Long, Partition<T>> e = ring.ceilingEntry(slot);
-        if (e == null) {
-            e = ring.firstEntry();
-        }
-        return Optional.ofNullable(e).map(Map.Entry::getValue);
-    }
-
-    private Set<T> findNodes(Map<Long, Partition<T>> seg, int count) {
-        Set<T> nodes = new HashSet<>();
-        Iterator<Partition<T>> it = seg.values().iterator();
-        while (it.hasNext() && count > 0) {
-            Partition<T> part = it.next();
-            if (nodes.add(part.getNode())) {
-                count--;
-            }
-        }
-        return nodes;
     }
 
     private long findSlot(String pk) {
@@ -223,6 +194,41 @@ public final class HashRing<T extends Node> implements ConsistentHash<T> {
 
     private long hash(String key, int seed) {
         return Math.abs(hasher.hash(key, seed));
+    }
+
+    private Set<T> findNodes(String key, int count) {
+        Set<T> res = new HashSet<>();
+        if (count < nodes.size()) {
+            long slot = hash(key);
+            Iterator<Partition<T>> it = new ClockwiseIterator(slot);
+            while (it.hasNext() && res.size() < count) {
+                Partition<T> part = it.next();
+                res.add(part.getNode());
+            }
+        } else {
+            res.addAll(nodes.keySet());
+        }
+        return res;
+    }
+
+    private class ClockwiseIterator implements Iterator<Partition<T>> {
+        private final Iterator<Partition<T>> head;
+        private final Iterator<Partition<T>> tail;
+
+        public ClockwiseIterator(long slot) {
+            this.head = ring.headMap(slot).values().iterator();
+            this.tail = ring.tailMap(slot).values().iterator();
+        }
+
+        @Override
+        public boolean hasNext() {
+            return head.hasNext() || tail.hasNext();
+        }
+
+        @Override
+        public Partition<T> next() {
+            return tail.hasNext() ? tail.next() : head.next();
+        }
     }
 
     @Override
