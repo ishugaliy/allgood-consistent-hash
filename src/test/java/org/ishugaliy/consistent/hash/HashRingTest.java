@@ -74,7 +74,9 @@ public class HashRingTest {
     @Test
     @DisplayName("Simulate slot collision in the ring and check that partition key was rehashed with new seed")
     public void add_collisionInHasher_true(@Mock Node n1, @Mock Node n2) {
-        Hasher hasher = mock(Hasher.class, in -> in.getArgument(1, Integer.class).longValue());
+        Hasher hasher = mock(Hasher.class, in ->
+            in.getArguments().length > 1 ? in.getArgument(1, Integer.class).longValue() : 0
+        );
         when(n1.getKey()).thenReturn("key1");
         when(n2.getKey()).thenReturn("key2");
         HashRing<Node> ring = HashRing.newBuilder()
