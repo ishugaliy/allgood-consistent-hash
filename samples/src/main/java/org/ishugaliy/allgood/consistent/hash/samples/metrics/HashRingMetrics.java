@@ -1,27 +1,3 @@
-/*
- * The MIT License
- *
- * Copyright (c) 2020 Iurii Shugalii
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
-
 package org.ishugaliy.allgood.consistent.hash.samples.metrics;
 
 import org.ishugaliy.allgood.consistent.hash.ConsistentHash;
@@ -30,8 +6,14 @@ import org.ishugaliy.allgood.consistent.hash.node.Node;
 
 import java.util.*;
 
-import static java.lang.String.*;
+import static java.lang.String.format;
 
+/**
+ * Decorator of {@link HashRing} that proxy all api calls to the target hash ring
+ * and calculated load distribution statistic.
+ *
+ * @author Iurii Shugalii
+ */
 public class HashRingMetrics<T extends Node> implements ConsistentHash<T> {
 
     private final HashRing<T> target;
@@ -110,10 +92,6 @@ public class HashRingMetrics<T extends Node> implements ConsistentHash<T> {
     @Override
     public int size() {
         return target.size();
-    }
-
-    public Map<T, Integer> getLoads() {
-        return new HashMap<>(loads);
     }
 
     public void printLoadDistribution() {

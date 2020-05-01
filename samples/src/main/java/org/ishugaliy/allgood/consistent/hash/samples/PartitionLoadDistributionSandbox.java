@@ -25,6 +25,7 @@
 package org.ishugaliy.allgood.consistent.hash.samples;
 
 import org.ishugaliy.allgood.consistent.hash.HashRing;
+import org.ishugaliy.allgood.consistent.hash.hasher.DefaultHasher;
 import org.ishugaliy.allgood.consistent.hash.samples.metrics.HashRingMetrics;
 import org.ishugaliy.allgood.consistent.hash.node.SimpleNode;
 
@@ -33,6 +34,29 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+/**
+ * Sandbox allows to check consistent hash load distribution between nodes
+ * for with different partition rate. Showing how distribution depends on partition rate.
+ * <p>
+ * You can play around with settings and usage and check results.
+ * <p>
+ *
+ * Case:
+ * 1. Build hash rings with different value of partition rate
+ * 2. Add {@link PartitionLoadDistributionSandbox#NODES_COUNT} nodes to the each ring
+ * 3. Send {@link PartitionLoadDistributionSandbox#REQUESTS_COUNT} requests to each ring
+ *    by locating node with {@link HashRing#locate(String)} and gather nodes hits statistics.
+ * 6. Print load distribution reports
+ * <p>
+ *
+ * Report is printed for each ring and includes:
+ * 1. Load distribution hits per node
+ * 2. Distribution extrema
+ * 3. Arithmetic mean
+ * 4. Standard deviation
+ *
+ * @author Iurii Shugalii
+ */
 public class PartitionLoadDistributionSandbox {
 
     private static final int NODES_COUNT = 3;

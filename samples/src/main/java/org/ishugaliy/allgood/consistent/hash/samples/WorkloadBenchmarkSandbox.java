@@ -24,10 +24,11 @@
 
 package org.ishugaliy.allgood.consistent.hash.samples;
 
-import org.ishugaliy.allgood.consistent.hash.HashRing;
 import org.ishugaliy.allgood.consistent.hash.ConsistentHash;
+import org.ishugaliy.allgood.consistent.hash.HashRing;
 import org.ishugaliy.allgood.consistent.hash.hasher.DefaultHasher;
 import org.ishugaliy.allgood.consistent.hash.hasher.Hasher;
+import org.ishugaliy.allgood.consistent.hash.node.Node;
 import org.ishugaliy.allgood.consistent.hash.node.SimpleNode;
 
 import java.util.List;
@@ -35,6 +36,26 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+/**
+ * Sandbox allows to check consistent hash performance.
+ * Showing how execution time depends on on the ring size and partition rate.
+ * <p>
+ * You can play around with settings and usage and check results.
+ * <p>
+ *
+ * Case:
+ * 1. Build hash rings with
+ *    {@link WorkloadBenchmarkSandbox#PARTITION_RATE}
+ *    {@link WorkloadBenchmarkSandbox#NODES_COUNT}
+ *    {@link WorkloadBenchmarkSandbox#HASHER}
+ * 2. Benchmark {@link HashRing#add(Node)} api
+ * 3. Benchmark {@link HashRing#locate(String)} api
+ *    with {@link WorkloadBenchmarkSandbox#REQUEST_COUNTS}
+ * 4. Benchmark {@link HashRing#locate(String, int)} api
+ *    with {@link WorkloadBenchmarkSandbox#REQUEST_COUNTS}
+ *
+ * @author Iurii Shugalii
+ */
 // TODO: use JMH benchmark instead - https://openjdk.java.net/projects/code-tools/jmh/
 public class WorkloadBenchmarkSandbox {
 

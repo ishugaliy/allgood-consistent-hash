@@ -1,27 +1,3 @@
-/*
- * The MIT License
- *
- * Copyright (c) 2020 Iurii Shugalii
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
-
 package org.ishugaliy.allgood.consistent.hash.samples;
 
 import org.ishugaliy.allgood.consistent.hash.node.SimpleNode;
@@ -34,16 +10,19 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 /**
- * Sandbox gives ability to test load distribution with `mod n hash`.
- * You can play around with settings and usage and check your results.
+ * Sandbox allows to check load distribution with `mod n hash`.
  * <p>
+ * You can play around with settings and usage and check results.
+ * <p>
+ *
  * Case:
  * 1. Create basic implementation of `Mod N Hash` {@link ModHash}
- * 2. Add {@link SimpleNode} nodes to the hash
- * 3. Simulate requests sending by locating node with {@link ModHash#locate(String)} and gather nodes hits statistics.
- * 4. Randomly remove some nodes from hash
+ * 2. Add {@link ModHashSandbox#NODES_COUNT} nodes to the hash
+ * 3. Send {@link ModHashSandbox#REQUEST_COUNT} requests by locating node with {@link ModHash#locate(String)}
+ *    and gather nodes hits statistics.
+ * 4. Randomly remove {@link ModHashSandbox#NODES_COUNT_TO_REMOVE} nodes from hash
  * 5. Repeat sending request from #3
- * 6. Print node miss report and load distribution report to console
+ * 6. Print node miss and load distribution reports
  *
  * @author Iurii Shugalii
  */
