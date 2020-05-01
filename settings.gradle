@@ -1,2 +1,2 @@
-rootProject.name = 'ConsistentHash'
+rootProject.name = 'allgood-consistent-hash'
 include 'samples'
