@@ -25,7 +25,8 @@
 package org.ishugaliy.allgood.consistent.hash.node;
 
 /**
- *  Base interface for nodes added to {@link org.ishugaliy.allgood.consistent.hash.ConsistentHash}.
+ *  Base interface for Consistent Hash nodes
+ *  {@link org.ishugaliy.allgood.consistent.hash.ConsistentHash}
  *
  *  @author Iurii Shugalii
  */

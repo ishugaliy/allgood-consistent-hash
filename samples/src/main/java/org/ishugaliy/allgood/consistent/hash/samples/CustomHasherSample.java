@@ -13,7 +13,7 @@ import java.util.UUID;
 
 
 /**
- * Sample showing building of {@link HashRing} with custom MD5 hasher.
+ * Sample showing build of {@link HashRing} with custom MD5 hash function.
  * <p>
  *
  * Case:
@@ -21,7 +21,7 @@ import java.util.UUID;
  *    with custom {@link MD5Hasher} hasher
  * 2. Add {@link SimpleNode} nodes to the ring
  * 3. Simulate requests sending by locating node with {@link HashRing#locate(String)}
- * 4. Trace to console, on which nodes request was sent
+ * 4. Print on which nodes request was sent
  *
  * @author Iurii Shugalii
  */

@@ -14,28 +14,19 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 /**
- * Sandbox allows to check consistent hash load distribution between nodes
- * with different hash functions. Showing how distribution depends on hash function.
- * <p>
- * You can play around with settings and usage and check results.
+ * Sandbox allows checking consistent hash load distribution between nodes with different hash functions.
+ * Showing how distribution depends on the hash function.
  * <p>
  *
  * Case:
  * 1. Build Hash Ring for every existing {@link DefaultHasher}
  *    with {@link HasherLoadDistributionSandbox#PARTITION_RATE}
- * 2. Add {@link HasherLoadDistributionSandbox#NODES_COUNT} nodes to the each ring
+ * 2. Add {@link HasherLoadDistributionSandbox#NODES_COUNT} nodes to each ring
  * 3. Send {@link HasherLoadDistributionSandbox#REQUESTS_COUNT} requests to each ring
  *    by locating node with {@link HashRing#locate(String)} and gather nodes hits statistics.
  * 4. Randomly remove {@link HasherLoadDistributionSandbox#NODES_TO_REMOVE} nodes from each ring
  * 5. Repeat sending request from #3
  * 6. Print load distribution reports
- * <p>
- *
- * Report is printed for each ring and includes:
- * 1. Load distribution hits per node
- * 2. Distribution extrema
- * 3. Arithmetic mean
- * 4. Standard deviation
  *
  * @author Iurii Shugalii
  */

@@ -31,7 +31,7 @@ import java.util.Objects;
 import java.util.StringJoiner;
 
 /**
- * Implementation of replicated partitions (virtual nodes) of {@link Node}.
+ * Implementation of replicated partitions (virtual nodes).
  * Replication is based on assigning of replication index {@link ReplicationPartition#index}
  * for each partition, that extends the {@link Node#getKey()}.
  *
@@ -56,11 +56,6 @@ public final class ReplicationPartition<T extends Node> implements Partition<T> 
         this.slot = slot;
     }
 
-    /**
-     * Return index of the partition replica.
-     *
-     * @return the partition index
-     */
     public int getIndex() {
         return index;
     }

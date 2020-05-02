@@ -9,8 +9,8 @@ import java.util.*;
 import static java.lang.String.format;
 
 /**
- * Decorator of {@link HashRing} that proxy all api calls to the target hash ring
- * and calculated load distribution statistic.
+ * Decorator of {@link HashRing}.
+ * Proxies all API calls to the target hash ring and calculates load distribution statistic.
  *
  * @author Iurii Shugalii
  */

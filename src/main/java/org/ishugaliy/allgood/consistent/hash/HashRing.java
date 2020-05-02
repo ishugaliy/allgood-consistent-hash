@@ -68,7 +68,7 @@ public final class HashRing<T extends Node> implements ConsistentHash<T> {
      *
      * @param name the name of the hash ring
      * @param hasher the hash function
-     * @param partitionRate amount of partition to be create per node
+     * @param partitionRate amount of partitions to be created per node
      */
     HashRing(String name, Hasher hasher, int partitionRate) {
         this.name = name;

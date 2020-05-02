@@ -37,10 +37,8 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 /**
- * Sandbox allows to check consistent hash performance.
- * Showing how execution time depends on on the ring size and partition rate.
- * <p>
- * You can play around with settings and usage and check results.
+ * Sandbox allows checking consistent hash performance.
+ * Showing how execution time depends on the ring size and partition rate.
  * <p>
  *
  * Case:
@@ -56,6 +54,7 @@ import java.util.stream.IntStream;
  *
  * @author Iurii Shugalii
  */
+
 // TODO: use JMH benchmark instead - https://openjdk.java.net/projects/code-tools/jmh/
 public class WorkloadBenchmarkSandbox {
 

@@ -8,14 +8,14 @@ import java.util.Optional;
 import java.util.UUID;
 
 /**
- * Sample showing default building and usage of {@link HashRing}.
+ * Sample showing default build and usage of {@link HashRing}.
  * <p>
  *
  * Case:
  * 1. Create hash ring via {@link org.ishugaliy.allgood.consistent.hash.HashRingBuilder} with default settings
  * 2. Add {@link SimpleNode} to the ring
  * 3. Simulate requests sending by locating node with {@link HashRing#locate(String)}
- * 4. Trace to console, on which nodes requests were sent
+ * 4. Print on which nodes requests were sent
  *
  * @author Iurii Shugalii
  */

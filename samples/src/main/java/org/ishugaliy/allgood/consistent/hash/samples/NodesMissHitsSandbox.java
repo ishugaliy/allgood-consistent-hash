@@ -12,10 +12,8 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 /**
- * Sandbox allows to check consistent hash node miss hits.
- * Showing what consistent hash miss hits value and how does it depend on partition rate.
- * <p>
- * You can play around with settings and usage and check results.
+ * Sandbox allows checking consistent hash nodes miss-hits.
+ * Showing dependency between miss-hits and partition rate.
  * <p>
  *
  * Case:

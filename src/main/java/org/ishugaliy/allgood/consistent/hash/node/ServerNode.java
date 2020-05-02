@@ -30,7 +30,7 @@ import java.util.Objects;
 import java.util.StringJoiner;
 
 /**
- * Implementation of {@link Node} and represents server.
+ * Represents server node
  *
  * @author Iurii Shugalii
  */

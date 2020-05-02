@@ -50,7 +50,7 @@ public final class HashRingBuilder<T extends Node> {
     /**
      * Set name of the hash ring
      *
-     * @param name the name, default value will be generated
+     * @param name the name of the ring. If no name was set, default name will be generated
      * @return builder instance
      * @throws NullPointerException if name is null
      */
@@ -80,7 +80,7 @@ public final class HashRingBuilder<T extends Node> {
      */
     public HashRingBuilder<T> partitionRate(int partitionRate) {
         if (partitionRate < 1) {
-            throw new IllegalArgumentException("Replication Factor can not be less than 1");
+            throw new IllegalArgumentException("Replication Rate can not be less than 1");
         }
         this.partitionRate = partitionRate;
         return this;

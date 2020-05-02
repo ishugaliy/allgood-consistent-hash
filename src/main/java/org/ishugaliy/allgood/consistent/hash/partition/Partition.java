@@ -27,7 +27,7 @@ package org.ishugaliy.allgood.consistent.hash.partition;
 import org.ishugaliy.allgood.consistent.hash.node.Node;
 
 /**
- * Base interface of creation partitions inside {@link org.ishugaliy.allgood.consistent.hash.HashRing}.
+ * Base interface of partitions to be used inside {@link org.ishugaliy.allgood.consistent.hash.HashRing}.
  * Partitions are created for each {@link Node} that added to the ring,
  * with assigned slots (ring positions) based on {@link Partition#getPartitionKey()}.
  *

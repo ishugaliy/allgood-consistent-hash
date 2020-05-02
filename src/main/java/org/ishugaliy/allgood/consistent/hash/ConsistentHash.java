@@ -31,7 +31,7 @@ import java.util.Optional;
 import java.util.Set;
 
 /**
- * Base interface for implementation of Consistent Hash
+ * Consistent Hash base interface
  *
  * @param <T> the type of node.
  *
@@ -50,26 +50,26 @@ public interface ConsistentHash<T extends Node> {
      * Add node to the consistent hash
      *
      * @param node the node to be added
-     * @return <tt>true</tt> if node was added or
-     *         <tt>false</tt> if not or node is null.
+     * @return <tt>true</tt> if node was added
+     *         <tt>false</tt> if node was not added or node is null.
      */
     boolean add(T node);
 
     /**
-     * Add all provided nodes to the consistent hash
+     * Add all nodes to the consistent hash
      *
      * @param nodes the nodes to be added
-     * @return <tt>true</tt> if at least one of the nodes were added or
+     * @return <tt>true</tt> if at least one of the nodes were added
      *         <tt>false</tt> if no nodes were added or all of them are null.
      */
     boolean addAll(Collection<T> nodes);
 
     /**
-     * Check if consistent hash contains provided node
+     * Check if consistent hash contains node
      *
      * @param node the node to be checked
-     * @return <tt>true</tt> if consistent hash contains node or
-     *         <tt>false</tt> if not or node is null
+     * @return <tt>true</tt> if hash contains node
+     *         <tt>false</tt> if hash does not contain node or node is null
      */
     boolean contains(T node);
 
@@ -77,13 +77,13 @@ public interface ConsistentHash<T extends Node> {
      * Remove node from the consistent hash
      *
      * @param node the node to be removed
-     * @return <tt>true</tt> if node was removed or
-     *         <tt>false</tt> if not or node is null
+     * @return <tt>true</tt> if node was removed
+     *         <tt>false</tt> if node was not removed or node is null
      */
     boolean remove(T node);
 
     /**
-     * Return list of all nodes that are inside consistent hash
+     * Return list of all nodes that consistent hash contains
      *
      * @return the nodes list
      */
@@ -101,7 +101,7 @@ public interface ConsistentHash<T extends Node> {
      * Find nodes which most matches the key
      *
      * @param key   the key
-     * @param count the amount for nodes to be matched
+     * @param count the amount of nodes to be matched
      * @return the nodes list or empty list if no nodes were found
      */
     Set<T> locate(String key, int count);

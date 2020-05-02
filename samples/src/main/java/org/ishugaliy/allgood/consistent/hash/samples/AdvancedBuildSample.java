@@ -10,7 +10,7 @@ import java.util.Set;
 
 
 /**
- * Sample showing advanced building and usage of {@link HashRing}.
+ * Sample showing advanced build and usage of {@link HashRing}.
  * <p>
  *
  * Case:
@@ -20,7 +20,7 @@ import java.util.Set;
  * 3. Simulate requests sending by locating two node with {@link HashRing#locate(String, int)}
  * 4. Remove some nodes from the ring
  * 5. Repeat sending of requests from #2
- * 6. Trace to console, on which nodes requests were sent
+ * 6. Print on which nodes requests were sent
  *
  * @author Iurii Shugalii
  */

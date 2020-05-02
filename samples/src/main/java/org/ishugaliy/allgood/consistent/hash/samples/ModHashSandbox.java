@@ -10,9 +10,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 /**
- * Sandbox allows to check load distribution with `mod n hash`.
- * <p>
- * You can play around with settings and usage and check results.
+ * Sandbox allows checking load distribution with `mod n` hash function.
  * <p>
  *
  * Case:
