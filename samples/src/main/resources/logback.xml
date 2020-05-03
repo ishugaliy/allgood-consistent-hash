@@ -5,7 +5,7 @@
         </encoder>
     </appender>
 
-    <logger name="org.ishugaliy.consistent.hash" level="error"/>
+    <logger name="org.ishugaliy.allgood.consistent.hash" level="error"/>
     <root level="debug">
         <appender-ref ref="STDOUT" />
     </root>
