@@ -1,3 +1,6 @@
+![Logo](logo.png)
+============
+
 # AllGood Consistent-Hash
 
 ![build](https://github.com/ishugaliy/consistent-hash/workflows/build/badge.svg?branch=master)
