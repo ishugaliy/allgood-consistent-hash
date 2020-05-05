@@ -19,5 +19,5 @@ jobs:
       - name: Publish artifacts
         run: ./gradlew publish --info
         env:
-          GITHUB_ACTOR: ${{ github.actor }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_ACTOR: "${{ github.actor }}"
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
