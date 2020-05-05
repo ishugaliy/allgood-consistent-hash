@@ -5,7 +5,7 @@ plugins {
 
 allprojects {
     group 'org.ishugaliy'
-    version '1.0-SNAPSHOT'
+    version '1.0.0-SNAPSHOT'
 
     apply plugin: 'java'
 
@@ -28,6 +28,11 @@ jacocoTestReport {
 }
 
 publishing {
+    publications {
+        maven(MavenPublication) {
+            from components.java
+        }
+    }
     repositories {
         maven {
             name = "GitHubPackages"
@@ -36,11 +41,6 @@ publishing {
                 username = System.getenv("GITHUB_ACTOR")
                 password = System.getenv("GITHUB_TOKEN")
             }
-        }
-    }
-    publications {
-        gpr(MavenPublication) {
-            from(components.java)
         }
     }
 }
