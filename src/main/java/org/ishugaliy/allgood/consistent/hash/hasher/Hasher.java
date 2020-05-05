@@ -26,7 +26,7 @@ package org.ishugaliy.allgood.consistent.hash.hasher;
 
 
 /**
- * Base interface for hash function.
+ * Hash function base interface
  *
  * @author Iurii Shugalii
  */
@@ -35,7 +35,7 @@ public interface Hasher {
 
 
     /**
-     * Calculate hash of provided key with seed (salt).
+     * Calculate hash of provided key with seed (salt)
      *
      * @param key  the key to be hashed
      * @param seed the seed (salt)

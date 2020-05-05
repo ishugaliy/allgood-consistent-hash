@@ -39,7 +39,8 @@ publishing {
         }
     }
     publications {
-        gpr(MavenPublication) {
+        maven(MavenPublication) {
+            version = '1.0.0-SNAPSHOT'
             from(components.java)
         }
     }
