@@ -7,9 +7,26 @@
 [![Test Coverage](https://api.codeclimate.com/v1/badges/44b0ef5de107b4e0cf7b/test_coverage)](https://codeclimate.com/github/ishugaliy/consistent-hash/test_coverage)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-Java library implements Consistent Hash with Virtual Nodes.</br>
+## Overview
 
-[More info](http://theory.stanford.edu/~tim/s17/l/l1.pdf)
+AllGood Consistent Hash is a Java implementation of [Consistent Hash Ring with Virtual Nodes](http://theory.stanford.edu/~tim/s17/l/l1.pdf) that supports customization of hashing and partition rate.
+<br>AllGood Consistent Hash is very user-friendly, which provides several examples, making it easy to understand and use.
+
+## Download
+
+<i>Maven</i>
+
+    <dependency>
+        <groupId>org.ishugaliy</groupId>
+        <artifactId>allgood-consistent-hash</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </dependency>
+
+<i>Gradle</i>
+
+    dependencies {
+        implementation 'org.ishugaliy:allgood-consistent-hash:1.0.0'
+    }
 
 ## Usage
 ### Structure
@@ -89,6 +106,9 @@ Namespace: `org.ishugaliy.allgood.consistent.hash`
             <appender-ref ref="STDOUT" />
         </root>
     </configuration>
+
+## Requirements
+Compile requirements: JDK 8+ and Maven 3.2.5+
   
 ## References
 - [Consistent Hashing: Algorithmic Tradeoffs](https://medium.com/@dgryski/consistent-hashing-algorithmic-tradeoffs-ef6b8e2fcae8)
