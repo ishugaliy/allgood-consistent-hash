@@ -17,10 +17,10 @@ Java library implements Consistent Hash with Virtual Nodes.</br>
 - [ConsistentHash](src/main/java/org/ishugaliy/allgood/consistent/hash/ConsistentHash.java) - consistent-hash implementation abstraction.
     - [HashRing](src/main/java/org/ishugaliy/allgood/consistent/hash/HashRing.java) - consistent-hash ring with virtual nodes implementation.
 - [Node](src/main/java/org/ishugaliy/allgood/consistent/hash/node/Node.java) - consistent-hash nodes abstraction.
-    - [SimpleNode](src/main/java/org/ishugaliy/allgood/consistent/hash/node/SimpleNode.java) - simple node, represents single value. 
+    - [SimpleNode](src/main/java/org/ishugaliy/allgood/consistent/hash/node/SimpleNode.java) - a simple node implementation, represents a single value. 
     - [ServerNode](src/main/java/org/ishugaliy/allgood/consistent/hash/node/ServerNode.java) - represents server or host. 
 - [Hasher](src/main/java/org/ishugaliy/allgood/consistent/hash/hasher/Hasher.java) - hash function abstraction.
-    - [DefaultHasher](src/main/java/org/ishugaliy/allgood/consistent/hash/hasher/DefaultHasher.java) - list of build in hash functions.
+    - [DefaultHasher](src/main/java/org/ishugaliy/allgood/consistent/hash/hasher/DefaultHasher.java) - list of build-in hash functions.
 
 ### Basic 
 
@@ -60,18 +60,18 @@ Java library implements Consistent Hash with Virtual Nodes.</br>
 <i><b>More samples</b> can be found [here](samples/src/main/java/org/ishugaliy/allgood/consistent/hash/samples/)</i>
 
 ### Sandboxes
-The sources contains <b>sandboxes</b> to analyze different load metrics (<i>standart deviation, nodes miss hits, etc</i>):
+The sources contains <b>sandboxes</b> to analyze different load metrics (<i>standard deviation, nodes miss-hits, etc</i>):
 - [HasherLoadDistributionSandbox](samples/src/main/java/org/ishugaliy/allgood/consistent/hash/samples/HasherLoadDistributionSandbox.java) </br>
-Sandbox allows checking consistent hash load distribution between nodes with different hash functions.
-Showing how distribution rate depends on the hash function and partition rate.
+The sandbox allows checking consistent hash load distribution between nodes with different hash functions.
+Showing how the distribution rate depends on the hash function and partition rate.
 - [NodesMissHitsSandbox](samples/src/main/java/org/ishugaliy/allgood/consistent/hash/samples/NodesMissHitsSandbox.java) </br>
-Sandbox allows checking consistent hash nodes miss-hits.
+The sandbox allows checking consistent hash nodes miss-hits.
 Showing dependency between miss-hits and partition rate.
 
 <i><b>More sandboxes</b> can be found [here](samples/src/main/java/org/ishugaliy/allgood/consistent/hash/samples/)</i>
 
 ## Logging 
-AllGood Consistent Hash library uses [slf4](http://www.slf4j.org/) logging facade that allows to plug it in the desired loggin framework at deployment time.
+AllGood Consistent Hash library uses a [slf4](http://www.slf4j.org/) logging facade that allows plug it in the desired logging framework at deployment time.
 </br></br>
 Namespace: `org.ishugaliy.allgood.consistent.hash`
 
