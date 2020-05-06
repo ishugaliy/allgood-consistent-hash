@@ -27,6 +27,10 @@ jacocoTestReport {
     }
 }
 
+java {
+    withSourcesJar()
+}
+
 publishing {
     repositories {
         maven {
