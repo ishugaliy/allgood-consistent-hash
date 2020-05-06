@@ -9,24 +9,64 @@
 
 ## Overview
 
-AllGood Consistent Hash is a Java implementation of [Consistent Hash Ring with Virtual Nodes](http://theory.stanford.edu/~tim/s17/l/l1.pdf) that supports customization of hashing and partition rate.
-<br>AllGood Consistent Hash is very user-friendly, which provides several examples, making it easy to understand and use.
+AllGood Consistent Hash is a Java implementation of [Consistent Hash Ring with Virtual Nodes](http://theory.stanford.edu/~tim/s17/l/l1.pdf) that supports customization of hashing and partition rate. 
+The library is very lightweight and user-friendly, which provides several examples, making it easy to understand and use.
 
 ## Download
 
-<i>Maven</i>
+### Gradle
 
-    <dependency>
-        <groupId>org.ishugaliy</groupId>
-        <artifactId>allgood-consistent-hash</artifactId>
-        <version>1.0.0-SNAPSHOT</version>
-    </dependency>
-
-<i>Gradle</i>
+    // authenticate with github packages
+    repositories {
+        maven {
+            url 'https://maven.pkg.github.com/ishugaliy/allgood-consistent-hash'
+            credentials {
+                username = '{your_username}'
+                password = '{your_access_token}'
+            }
+        }
+    }
 
     dependencies {
         implementation 'org.ishugaliy:allgood-consistent-hash:1.0.0'
     }
+
+[Gradle with GitHub Packages](https://help.github.com/en/packages/using-github-packages-with-your-projects-ecosystem/configuring-gradle-for-use-with-github-packages)
+   
+### Maven
+<i>settings.xml</i>
+
+    // authenticate with github packages
+    <profiles>
+        <profile>
+            <id>github</id>
+            <repositories>
+                <repository>
+                    <id>github</id>
+                    <name>GitHub IShugaliy Apache Maven Packages</name>
+                    <url>https://maven.pkg.github.com/ishugaliy/allgood-consistent-hash</url>
+                </repository>
+            </repositories>
+        </profile>
+    </profiles>
+
+    <servers>
+        <server>
+            <id>github</id>
+            <username>{your_github_username}</username>
+            <password>{your_github_access_token}</password>
+        </server>
+    </servers>
+
+<i>pom.xml</i>
+
+    <dependency>
+        <groupId>org.ishugaliy</groupId>
+        <artifactId>allgood-consistent-hash</artifactId>
+        <version>1.0.0</version>
+    </dependency>
+
+[Maven with GitHub Packages](https://help.github.com/en/packages/using-github-packages-with-your-projects-ecosystem/configuring-apache-maven-for-use-with-github-packages)
 
 ## Usage
 ### Structure
