@@ -59,6 +59,10 @@ The library is very lightweight and user-friendly, which provides several exampl
         </server>
     </servers>
 
+    <activeProfiles>
+        <activeProfile>github</activeProfile>
+    </activeProfiles>
+
 <i>pom.xml</i>
 
     <dependency>
