@@ -64,7 +64,7 @@ public final class HashRing<T extends Node> implements ConsistentHash<T> {
 
 
     /**
-     * Instance can be create only via builder {@link HashRing#newBuilder()}
+     * Instance can be created only via builder {@link HashRing#newBuilder()}
      *
      * @param name the name of the hash ring
      * @param hasher the hash function
