@@ -22,7 +22,7 @@ import java.util.Set;
  * 5. Repeat sending of requests from #2
  * 6. Print on which nodes requests were sent
  *
- * @author Iurii Shugalii
+ * @author Yuriy Shugaliy
  */
 public class AdvancedBuildSample {
 

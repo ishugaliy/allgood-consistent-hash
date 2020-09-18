@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright (c) 2020 Iurii Shugalii
+ * Copyright (c) 2020 Yuriy Shugaliy
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -32,7 +32,7 @@ import java.util.StringJoiner;
 /**
  * Represents server node
  *
- * @author Iurii Shugalii
+ * @author Yuriy Shugaliy
  */
 public class ServerNode implements Node {
     private final String dc;

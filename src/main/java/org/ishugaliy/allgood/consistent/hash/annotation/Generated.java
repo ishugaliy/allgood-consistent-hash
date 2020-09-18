@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright (c) 2020 Iurii Shugalii
+ * Copyright (c) 2020 Yuriy Shugaliy
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -32,7 +32,7 @@ import java.lang.annotation.RetentionPolicy;
  *
  * @see <a href="https://github.com/jacoco/jacoco">Jacoco</a>
  *
- * @author Iurii Shugalii
+ * @author Yuriy Shugaliy
  */
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Generated { }

@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright (c) 2020 Iurii Shugalii
+ * Copyright (c) 2020 Yuriy Shugaliy
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -32,7 +32,7 @@ import java.util.Objects;
  * Simple implementation of {@link Node}.
  * Wrap String value and return it as a key.
  *
- * @author Iurii Shugalii
+ * @author Yuriy Shugaliy
  */
 public class SimpleNode implements Node {
 
@@ -45,6 +45,8 @@ public class SimpleNode implements Node {
 
     /**
      * Factory method to create instance of the class.
+     *
+     * @param value - string value represented by the node
      *
      * @return the instance of the class
      */

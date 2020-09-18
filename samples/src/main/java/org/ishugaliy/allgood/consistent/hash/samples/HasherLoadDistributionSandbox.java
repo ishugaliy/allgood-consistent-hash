@@ -28,7 +28,7 @@ import java.util.stream.IntStream;
  * 5. Repeat sending request from #3
  * 6. Print load distribution reports
  *
- * @author Iurii Shugalii
+ * @author Yuriy Shugaliy
  */
 
 @SuppressWarnings("all")

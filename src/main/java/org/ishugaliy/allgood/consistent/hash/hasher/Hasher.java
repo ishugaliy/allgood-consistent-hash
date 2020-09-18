@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright (c) 2020 Iurii Shugalii
+ * Copyright (c) 2020 Yuriy Shugaliy
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,7 +28,7 @@ package org.ishugaliy.allgood.consistent.hash.hasher;
 /**
  * Hash function base interface
  *
- * @author Iurii Shugalii
+ * @author Yuriy Shugaliy
  */
 @FunctionalInterface
 public interface Hasher {

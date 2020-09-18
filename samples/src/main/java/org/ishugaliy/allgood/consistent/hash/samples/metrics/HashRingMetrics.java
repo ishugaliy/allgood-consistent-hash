@@ -12,7 +12,7 @@ import static java.lang.String.format;
  * Decorator of {@link HashRing}.
  * Proxies all API calls to the target hash ring and calculates load distribution statistic.
  *
- * @author Iurii Shugalii
+ * @author Yuriy Shugaliy
  */
 public class HashRingMetrics<T extends Node> implements ConsistentHash<T> {
 

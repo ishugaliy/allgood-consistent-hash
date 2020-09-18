@@ -167,7 +167,7 @@ Compile requirements: JDK 8+ and Maven 3.2.5+
 ## License
     The MIT License
 
-    Copyright (c) 2020 Iurii Shugalii
+    Copyright (c) 2020 Yuriy Shugaliy
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal

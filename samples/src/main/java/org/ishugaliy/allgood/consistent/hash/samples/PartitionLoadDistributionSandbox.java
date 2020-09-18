@@ -21,7 +21,7 @@ import java.util.stream.IntStream;
  *    by locating node with {@link HashRing#locate(String)} and gather nodes hits statistics.
  * 6. Print load distribution reports
  *
- * @author Iurii Shugalii
+ * @author Yuriy Shugaliy
  */
 public class PartitionLoadDistributionSandbox {
 

@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright (c) 2020 Iurii Shugalii
+ * Copyright (c) 2020 Yuriy Shugaliy
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -44,11 +44,11 @@ import static java.util.Collections.emptyList;
  * Implementation of Consistent Hash Ring with Virtual Nodes (partitions).
  * Hash ring is based on Binary Search Tree - {@link TreeMap}
  *
- * @see <a href="https://docs.datastax.com/en/dse/6.8/dse-arch/datastax_enterprise/dbArch/archDataDistributeHashing.html"/>
+ * @see <a href="https://docs.datastax.com/en/dse/6.8/dse-arch/datastax_enterprise/dbArch/archDataDistributeHashing.html"></a>
  *
  * @param <T> the type of node to be used in the ring
  *
- * @author Iurrii Shugalii
+ * @author Yuriy Shugaliy
  */
 public final class HashRing<T extends Node> implements ConsistentHash<T> {
 

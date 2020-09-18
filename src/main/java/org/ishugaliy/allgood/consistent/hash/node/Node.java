@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright (c) 2020 Iurii Shugalii
+ * Copyright (c) 2020 Yuriy Shugaliy
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,7 +28,7 @@ package org.ishugaliy.allgood.consistent.hash.node;
  *  Base interface for Consistent Hash nodes
  *  {@link org.ishugaliy.allgood.consistent.hash.ConsistentHash}
  *
- *  @author Iurii Shugalii
+ *  @author Yuriy Shugaliy
  */
 public interface Node {
 

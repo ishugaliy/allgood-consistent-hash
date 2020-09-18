@@ -23,7 +23,7 @@ import java.util.UUID;
  * 3. Simulate requests sending by locating node with {@link HashRing#locate(String)}
  * 4. Print on which nodes request was sent
  *
- * @author Iurii Shugalii
+ * @author Yuriy Shugaliy
  */
 public class CustomHasherSample {
 

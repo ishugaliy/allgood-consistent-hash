@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright (c) 2020 Iurii Shugalii
+ * Copyright (c) 2020 Yuriy Shugaliy
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -52,7 +52,7 @@ import java.util.stream.IntStream;
  * 4. Benchmark {@link HashRing#locate(String, int)} api
  *    with {@link WorkloadBenchmarkSandbox#REQUEST_COUNTS}
  *
- * @author Iurii Shugalii
+ * @author Yuriy Shugaliy
  */
 
 // TODO: use JMH benchmark instead - https://openjdk.java.net/projects/code-tools/jmh/
